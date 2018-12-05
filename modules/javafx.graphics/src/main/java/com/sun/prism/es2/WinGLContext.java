@@ -26,6 +26,8 @@
 package com.sun.prism.es2;
 
 
+import org.lwjgl.Version;
+
 class WinGLContext extends GLContext {
 
     private static native long nInitialize(long nativeDInfo, long nativePFInfo,
@@ -40,6 +42,7 @@ class WinGLContext extends GLContext {
     WinGLContext(GLDrawable drawable, GLPixelFormat pixelFormat,
             boolean vSyncRequest) {
 
+        System.out.println(Version.getVersion());
         // holds the list of attributes to be translated for native call
         int attrArr[] = new int[GLPixelFormat.Attributes.NUM_ITEMS];
 

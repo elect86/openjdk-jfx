@@ -817,7 +817,6 @@ List<String> computeLibraryPath(boolean working) {
 // Return list with the arguments needed for --patch-module or --module-path
 // for the provided projects. Used with Java executables ie. tests
 List<String> computePatchModuleArgs(List<String> deps, boolean test, boolean includeJLP) {
-    println("computePatchModuleArgs")
     List<String> pma = []
 
     if (HAS_JAVAFX_MODULES) {
@@ -831,7 +830,6 @@ List<String> computePatchModuleArgs(List<String> deps, boolean test, boolean inc
                     dir = file("${rootProject.buildDir}/modular-sdk/modules")
                 }
                 String moduleName = proj.ext.moduleName
-//                println("moduleName $moduleName")
                 String dirpath = cygpath("${dir}/${moduleName}")
                 pma += "--patch-module=${moduleName}=${dirpath}"
             }
@@ -842,7 +840,6 @@ List<String> computePatchModuleArgs(List<String> deps, boolean test, boolean inc
             def proj = project(projname)
             if (proj.hasProperty("moduleName")) {
                 String moduleName = proj.ext.moduleName
-//                println("moduleName $moduleName")
                 File dir;
                 if (test && proj.sourceSets.hasProperty('shims')) {
                     dir = file("${rootProject.buildDir}/shims/${moduleName}")
@@ -880,7 +877,6 @@ List<String> computePatchModuleArgs(List<String> deps, boolean test, boolean inc
         if (addm != null) {
             pma += "--add-modules=${addm}"
         }
-//        println("addm: $addm")
     }
 
     if (includeJLP) {
@@ -2007,6 +2003,7 @@ project(":graphics") {
         inputs.property("javafx.graphics", moduleName)
         doFirst {
             options.compilerArgs += "--module-path=$classpath.asPath"
+//            options.compilerArgs += "--add-modules=org.lwjgl"
             classpath = files()
         }
     }
@@ -2028,7 +2025,7 @@ project(":graphics") {
                 '--module-source-path', defaultModuleSourcePath,
                 '--module-path', classpath.asPath
         ])
-        println(options.compilerArgs)
+//        println(options.compilerArgs)
     }
     classes.dependsOn(compileFullJava)
 
@@ -2364,6 +2361,34 @@ project(":controls") {
     dependencies {
         testCompile project(":graphics").sourceSets.test.output
         testCompile project(":base").sourceSets.test.output
+
+        ext.lwjglVersion = "3.2.1-SNAPSHOT"
+        switch (org.gradle.internal.os.OperatingSystem.current()) {
+            case org.gradle.internal.os.OperatingSystem.WINDOWS:
+                ext.lwjglNatives = "natives-windows"
+                break
+            case org.gradle.internal.os.OperatingSystem.LINUX:
+                ext.lwjglNatives = "natives-linux"
+                break
+            case org.gradle.internal.os.OperatingSystem.MAC_OS:
+                ext.lwjglNatives = "natives-macos"
+                break
+        }
+        ["", "-jemalloc", "-opengl"].each {
+            compile "org.lwjgl:lwjgl$it:$lwjglVersion"
+            runtime "org.lwjgl:lwjgl$it:$lwjglVersion:$lwjglNatives"
+        }
+    }
+
+    repositories {
+        maven { setUrl("https://oss.sonatype.org/content/repositories/snapshots/") }
+    }
+
+    compileJava {
+        doFirst {
+            options.compilerArgs += "--module-path=$classpath.asPath"
+            classpath = files()
+        }
     }
 
     test {
@@ -2375,6 +2400,8 @@ project(":controls") {
     def modulePath = "${project.sourceSets.main.java.outputDir}"
     modulePath += File.pathSeparator + "${rootProject.projectDir}/modules/javafx.graphics/build/classes/java/main"
     modulePath += File.pathSeparator + "${rootProject.projectDir}/modules/javafx.base/build/classes/java/main"
+    def a = "C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-jemalloc/3.2.1-SNAPSHOT/a7b99599619921dcd850007c3b1f506e82c5338e/lwjgl-jemalloc-3.2.1-SNAPSHOT.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-opengl/3.2.1-SNAPSHOT/d312c805bb61a833df46119f9c2201b8f27c86/lwjgl-opengl-3.2.1-SNAPSHOT.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl/3.2.1-SNAPSHOT/f458e525c255a91a6b8c3ffa07d4c66448797231/lwjgl-3.2.1-SNAPSHOT.jar"
+    modulePath += File.pathSeparator + a
     processResources {
         doLast {
             def cssFiles = fileTree(dir: "$moduleDir/com/sun/javafx/scene/control/skin")
@@ -2387,7 +2414,7 @@ project(":controls") {
                     workingDir = project.projectDir
                     jvmArgs += patchModuleArgs
                     jvmArgs += "--module-path=$modulePath"
-                    jvmArgs += "--add-modules=javafx.graphics"
+                    jvmArgs += "--add-modules=javafx.graphics,org.lwjgl"
                     main = "com.sun.javafx.css.parser.Css2Bin"
                     args css
                 }
@@ -2428,6 +2455,35 @@ project(":swing") {
     commonModuleSetup(project, ['base', 'graphics', 'swing'])
 
     dependencies {
+        testCompile project(":graphics").sourceSets.test.output
+        testCompile project(":base").sourceSets.test.output
+        ext.lwjglVersion = "3.2.1-SNAPSHOT"
+        switch (org.gradle.internal.os.OperatingSystem.current()) {
+            case org.gradle.internal.os.OperatingSystem.WINDOWS:
+                ext.lwjglNatives = "natives-windows"
+                break
+            case org.gradle.internal.os.OperatingSystem.LINUX:
+                ext.lwjglNatives = "natives-linux"
+                break
+            case org.gradle.internal.os.OperatingSystem.MAC_OS:
+                ext.lwjglNatives = "natives-macos"
+                break
+        }
+        ["", "-jemalloc", "-opengl"].each {
+            compile "org.lwjgl:lwjgl$it:$lwjglVersion"
+            runtime "org.lwjgl:lwjgl$it:$lwjglVersion:$lwjglNatives"
+        }
+    }
+
+    repositories {
+        maven { setUrl("https://oss.sonatype.org/content/repositories/snapshots/") }
+    }
+
+    compileJava {
+        doFirst {
+            options.compilerArgs += "--module-path=$classpath.asPath"
+            classpath = files()
+        }
     }
 
     test {
@@ -2519,6 +2575,33 @@ project(":fxml") {
     dependencies {
         testCompile project(":graphics").sourceSets.test.output
         testCompile project(":base").sourceSets.test.output
+        ext.lwjglVersion = "3.2.1-SNAPSHOT"
+        switch (org.gradle.internal.os.OperatingSystem.current()) {
+            case org.gradle.internal.os.OperatingSystem.WINDOWS:
+                ext.lwjglNatives = "natives-windows"
+                break
+            case org.gradle.internal.os.OperatingSystem.LINUX:
+                ext.lwjglNatives = "natives-linux"
+                break
+            case org.gradle.internal.os.OperatingSystem.MAC_OS:
+                ext.lwjglNatives = "natives-macos"
+                break
+        }
+        ["", "-jemalloc", "-opengl"].each {
+            compile "org.lwjgl:lwjgl$it:$lwjglVersion"
+            runtime "org.lwjgl:lwjgl$it:$lwjglVersion:$lwjglNatives"
+        }
+    }
+
+    repositories {
+        maven { setUrl("https://oss.sonatype.org/content/repositories/snapshots/") }
+    }
+
+    compileJava {
+        doFirst {
+            options.compilerArgs += "--module-path=$classpath.asPath"
+            classpath = files()
+        }
     }
 
     test {
@@ -2565,20 +2648,40 @@ project(":media") {
             media name: "libav-12.1", ext: "tar.gz"
             media name: "ffmpeg-3.3.3", ext: "tar.gz"
         }
+
+        ext.lwjglVersion = "3.2.1-SNAPSHOT"
+        switch (org.gradle.internal.os.OperatingSystem.current()) {
+            case org.gradle.internal.os.OperatingSystem.WINDOWS:
+                ext.lwjglNatives = "natives-windows"
+                break
+            case org.gradle.internal.os.OperatingSystem.LINUX:
+                ext.lwjglNatives = "natives-linux"
+                break
+            case org.gradle.internal.os.OperatingSystem.MAC_OS:
+                ext.lwjglNatives = "natives-macos"
+                break
+        }
+        ["", "-jemalloc", "-opengl"].each {
+            compile "org.lwjgl:lwjgl$it:$lwjglVersion"
+            runtime "org.lwjgl:lwjgl$it:$lwjglVersion:$lwjglNatives"
+        }
+    }
+
+    repositories {
+        maven { setUrl("https://oss.sonatype.org/content/repositories/snapshots/") }
     }
 
     compileJava.dependsOn updateCacheIfNeeded
 
     compileJava {
-        options.compilerArgs += "--module-path=$classpath.asPath"
-        classpath = files()
         // generate the native headers during compile
         options.compilerArgs.addAll([
-                '-h', "${project.buildDir}/gensrc/headers",
-//                '--add-modules', "org.lwjgl",
-//                '--module-path', "C:\\Users\\elect\\.gradle\\caches\\modules-2\\files-2.1\\org.lwjgl\\lwjgl-jemalloc\\3.2.1-SNAPSHOT\\658e23f7f2cf2c5051bdd9b972b3d3ec17a580ff\\lwjgl-jemalloc-3.2.1-SNAPSHOT.jar;C:\\Users\\elect\\.gradle\\caches\\modules-2\\files-2.1\\org.lwjgl\\lwjgl-opengl\\3.2.1-SNAPSHOT\\46ab3ffa7a477f0fc0ac23a8c4e18a58cde4f137\\lwjgl-opengl-3.2.1-SNAPSHOT.jar;C:\\Users\\elect\\.gradle\\caches\\modules-2\\files-2.1\\org.lwjgl\\lwjgl\\3.2.1-SNAPSHOT\\5c788aa37540920077bea494cb5c39f96c486026\\lwjgl-3.2.1-SNAPSHOT.jar"
+                '-h', "${project.buildDir}/gensrc/headers"
         ])
-        println(options.compilerArgs)
+        doFirst {
+            options.compilerArgs += "--module-path=$classpath.asPath"
+            classpath = files()
+        }
     }
 
     compileToolsJava {
@@ -3091,7 +3194,8 @@ project(":media") {
                 }
                 buildGStreamer.dependsOn buildGlib
 
-            } else if (t.name == "mac") {
+            }
+            else if (t.name == "mac") {
                 def buildGlib = task("build${t.capital}Glib") {
                     enabled = IS_COMPILE_MEDIA
                     doLast {
@@ -3149,6 +3253,33 @@ project(":web") {
     commonModuleSetup(project, ['base', 'graphics', 'controls', 'media', 'web'])
 
     dependencies {
+        ext.lwjglVersion = "3.2.1-SNAPSHOT"
+        switch (org.gradle.internal.os.OperatingSystem.current()) {
+            case org.gradle.internal.os.OperatingSystem.WINDOWS:
+                ext.lwjglNatives = "natives-windows"
+                break
+            case org.gradle.internal.os.OperatingSystem.LINUX:
+                ext.lwjglNatives = "natives-linux"
+                break
+            case org.gradle.internal.os.OperatingSystem.MAC_OS:
+                ext.lwjglNatives = "natives-macos"
+                break
+        }
+        ["", "-jemalloc", "-opengl"].each {
+            compile "org.lwjgl:lwjgl$it:$lwjglVersion"
+            runtime "org.lwjgl:lwjgl$it:$lwjglVersion:$lwjglNatives"
+        }
+    }
+
+    repositories {
+        maven { setUrl("https://oss.sonatype.org/content/repositories/snapshots/") }
+    }
+
+    compileJava {
+        doFirst {
+            options.compilerArgs += "--module-path=$classpath.asPath"
+            classpath = files()
+        }
     }
 
     compileJava.dependsOn updateCacheIfNeeded
