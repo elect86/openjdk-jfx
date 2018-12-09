@@ -36,18 +36,21 @@ class WinGLDrawable extends GLDrawable {
     WinGLDrawable(GLPixelFormat pixelFormat) {
 
         super(0L, pixelFormat);
+        System.out.println("WinGLDrawable.nGetDummyDrawable");
         long nDInfo = nGetDummyDrawable(pixelFormat.getNativePFInfo());
         setNativeDrawableInfo(nDInfo);
     }
 
     WinGLDrawable(long nativeWindow, GLPixelFormat pixelFormat) {
         super(nativeWindow, pixelFormat);
+        System.out.println("WinGLDrawable.nCreateDrawable");
         long nDInfo = nCreateDrawable(nativeWindow, pixelFormat.getNativePFInfo());
         setNativeDrawableInfo(nDInfo);
     }
 
     @Override
     boolean swapBuffers(GLContext glCtx) {
+        System.out.println("WinGLDrawable.nSwapBuffers");
         return nSwapBuffers(getNativeDrawableInfo());
     }
 }

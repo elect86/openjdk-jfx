@@ -91,12 +91,14 @@ class WinGLFactory extends GLFactory {
         attrArr[GLPixelFormat.Attributes.ONSCREEN] = attrs.isOnScreen() ? 1 : 0;
 
         // return the context info object created on the default screen
-        nativeCtxInfo = nInitialize(attrArr);
+        System.out.println("WinGLFactory.nInitialize");
+        nativeCtxInfo = nInitialize != null ? nInitialize.invoke(attrArr) : nInitialize(attrArr);
 
         if (nativeCtxInfo == 0) {
             // current pipe doesn't support this pixelFormat request
             return false;
         } else {
+            System.out.println("WinGLFactory.nGetIsGL2");
             gl2 = nGetIsGL2(nativeCtxInfo);
             return true;
         }
@@ -104,16 +106,25 @@ class WinGLFactory extends GLFactory {
 
     @Override
     int getAdapterCount() {
+        System.out.println("WinGLFactory.nGetAdapterCount");
         return nGetAdapterCount();
     }
 
     @Override
     int getAdapterOrdinal(long nativeScreen) {
+        System.out.println("WinGLFactory.nGetAdapterOrdinal");
         return nGetAdapterOrdinal(nativeScreen);
     }
 
     @Override
     void updateDeviceDetails(HashMap deviceDetails) {
         // This is a NOP on Windows
+    }
+
+    static nInitialize nInitialize = null;
+
+    @FunctionalInterface
+    interface nInitialize {
+        long invoke(int[] attrArr);
     }
 }

@@ -2,28 +2,53 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/3DViewer.iml" filepath="$PROJECT_DIR$/.idea/3DViewer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/Ensemble8.iml" filepath="$PROJECT_DIR$/.idea/Ensemble8.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/FX8-3DFeatures.iml" filepath="$PROJECT_DIR$/.idea/FX8-3DFeatures.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/FXSlideShow.iml" filepath="$PROJECT_DIR$/.idea/FXSlideShow.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/GraphicsPerformance.iml" filepath="$PROJECT_DIR$/.idea/GraphicsPerformance.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/Hello.iml" filepath="$PROJECT_DIR$/.idea/Hello.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/MandelbrotSet.iml" filepath="$PROJECT_DIR$/.idea/MandelbrotSet.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/Modena.iml" filepath="$PROJECT_DIR$/.idea/Modena.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/Shape3DToy.iml" filepath="$PROJECT_DIR$/.idea/Shape3DToy.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/StretchyGrid.iml" filepath="$PROJECT_DIR$/.idea/StretchyGrid.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/base.iml" filepath="$PROJECT_DIR$/.idea/base.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/buildSrc.iml" filepath="$PROJECT_DIR$/.idea/buildSrc.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/controls.iml" filepath="$PROJECT_DIR$/.idea/controls.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/fxml.iml" filepath="$PROJECT_DIR$/.idea/fxml.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/graphics.iml" filepath="$PROJECT_DIR$/.idea/graphics.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/media.iml" filepath="$PROJECT_DIR$/.idea/media.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/rt.iml" filepath="$PROJECT_DIR$/.idea/rt.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/swing.iml" filepath="$PROJECT_DIR$/.idea/swing.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/swt.iml" filepath="$PROJECT_DIR$/.idea/swt.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/tests.iml" filepath="$PROJECT_DIR$/.idea/tests.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/web.iml" filepath="$PROJECT_DIR$/.idea/web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/openjdk-jfx.iml" filepath="$PROJECT_DIR$/openjdk-jfx.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/apps/openjdk-jfx.apps.iml" filepath="$PROJECT_DIR$/.idea/modules/apps/openjdk-jfx.apps.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/openjdk-jfx.buildSrc.iml" filepath="$PROJECT_DIR$/.idea/modules/openjdk-jfx.buildSrc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/openjdk-jfx.buildSrc.main.iml" filepath="$PROJECT_DIR$/.idea/modules/openjdk-jfx.buildSrc.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/openjdk-jfx.buildSrc.test.iml" filepath="$PROJECT_DIR$/.idea/modules/openjdk-jfx.buildSrc.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.swt/openjdk-jfx.swt.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.swt/openjdk-jfx.swt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.swt/openjdk-jfx.swt.main.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.swt/openjdk-jfx.swt.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.swt/openjdk-jfx.swt.test.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.swt/openjdk-jfx.swt.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.iml" filepath="$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.main.iml" filepath="$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.test.iml" filepath="$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp1.iml" filepath="$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp2.iml" filepath="$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp3.iml" filepath="$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp4.iml" filepath="$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp5.iml" filepath="$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp5.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp6.iml" filepath="$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp6.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.base/org.openjfx.base.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.base/org.openjfx.base.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.base/org.openjfx.base.main.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.base/org.openjfx.base.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.base/org.openjfx.base.shims.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.base/org.openjfx.base.shims.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.base/org.openjfx.base.test.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.base/org.openjfx.base.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.controls/org.openjfx.controls.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.controls/org.openjfx.controls.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.controls/org.openjfx.controls.main.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.controls/org.openjfx.controls.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.controls/org.openjfx.controls.shims.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.controls/org.openjfx.controls.shims.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.controls/org.openjfx.controls.test.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.controls/org.openjfx.controls.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.fxml/org.openjfx.fxml.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.fxml/org.openjfx.fxml.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.fxml/org.openjfx.fxml.main.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.fxml/org.openjfx.fxml.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.fxml/org.openjfx.fxml.shims.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.fxml/org.openjfx.fxml.shims.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.fxml/org.openjfx.fxml.test.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.fxml/org.openjfx.fxml.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.graphics/org.openjfx.graphics.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.graphics/org.openjfx.graphics.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.graphics/org.openjfx.graphics.jslc.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.graphics/org.openjfx.graphics.jslc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.graphics/org.openjfx.graphics.main.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.graphics/org.openjfx.graphics.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.graphics/org.openjfx.graphics.shaders.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.graphics/org.openjfx.graphics.shaders.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.graphics/org.openjfx.graphics.shims.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.graphics/org.openjfx.graphics.shims.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.graphics/org.openjfx.graphics.stub.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.graphics/org.openjfx.graphics.stub.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.graphics/org.openjfx.graphics.test.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.graphics/org.openjfx.graphics.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.media/org.openjfx.media.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.media/org.openjfx.media.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.media/org.openjfx.media.main.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.media/org.openjfx.media.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.media/org.openjfx.media.test.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.media/org.openjfx.media.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.media/org.openjfx.media.tools.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.media/org.openjfx.media.tools.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.swing/org.openjfx.swing.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.swing/org.openjfx.swing.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.swing/org.openjfx.swing.main.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.swing/org.openjfx.swing.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.swing/org.openjfx.swing.test.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.swing/org.openjfx.swing.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.web/org.openjfx.web.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.web/org.openjfx.web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.web/org.openjfx.web.main.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.web/org.openjfx.web.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.web/org.openjfx.web.shims.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.web/org.openjfx.web.shims.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.web/org.openjfx.web.test.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.web/org.openjfx.web.test.iml" />
     </modules>
   </component>
 </project>
-

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id=":controls:test" external.linked.project.path="$MODULE_DIR$/../../../../modules/javafx.controls" external.root.project.path="$MODULE_DIR$/../../../.." external.system.id="GRADLE" external.system.module.group="org.openjfx" external.system.module.type="sourceSet" external.system.module.version="12-internal+0-2018-12-07-143958" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_11">
+    <output-test url="file://$MODULE_DIR$/../../../../modules/javafx.controls/out/test/classes" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../../../modules/javafx.controls/src/test">
+      <sourceFolder url="file://$MODULE_DIR$/../../../../modules/javafx.controls/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../modules/javafx.controls/src/test/resources" type="java-test-resource" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="org.openjfx.graphics.test" production-on-test="" />
+    <orderEntry type="module" module-name="org.openjfx.base.test" production-on-test="" />
+    <orderEntry type="module" module-name="org.openjfx.controls.main" />
+    <orderEntry type="library" name="Gradle: junit:junit:4.8.2" level="project" />
+  </component>
+  <component name="TestModuleProperties" production-module="org.openjfx.controls.main" />
+</module>

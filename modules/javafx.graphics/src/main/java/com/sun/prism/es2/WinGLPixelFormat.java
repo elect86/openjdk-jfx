@@ -43,8 +43,17 @@ class WinGLPixelFormat extends GLPixelFormat {
         attrArr[GLPixelFormat.Attributes.DEPTH_SIZE] = attrs.getDepthSize();
         attrArr[GLPixelFormat.Attributes.DOUBLEBUFFER] = attrs.isDoubleBuffer() ? 1 : 0;
         attrArr[GLPixelFormat.Attributes.ONSCREEN] = attrs.isOnScreen() ? 1 : 0;
-        long nativePF = nCreatePixelFormat(nativeScreen, attrArr);
+        System.out.println("WinGLPixelFormat.nCreatePixelFormat");
+        long nativePF = nCreatePixelFormat != null ? nCreatePixelFormat.invoke(nativeScreen, attrArr) :
+                nCreatePixelFormat(nativeScreen, attrArr);
         setNativePFInfo(nativePF);
 
+    }
+
+    static nCreatePixelFormat nCreatePixelFormat = null;
+
+    @FunctionalInterface
+    interface nCreatePixelFormat {
+        long invoke(long nativeScreen, int[] attrArr);
     }
 }
