@@ -37,8 +37,6 @@ module javafx.graphics {
     requires java.desktop;
     requires java.xml;
     requires jdk.unsupported;
-    requires org.lwjgl;
-    requires org.lwjgl.opengl;
 
     requires transitive javafx.base;
 
