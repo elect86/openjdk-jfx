@@ -25,7 +25,6 @@
 
 package com.sun.prism.es2;
 
-
 class WinGLContext extends GLContext {
 
     private static native long nInitialize(long nativeDInfo, long nativePFInfo,

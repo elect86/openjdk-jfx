@@ -212,7 +212,7 @@ public final class PrismSettings {
             tryOrderArr = split(order, ",");
         } else {
             if (PlatformUtil.isWindows()) {
-                tryOrderArr = new String[] { "d3d", "sw" };
+                tryOrderArr = new String[] { "es2", "d3d", "sw" };
             } else if (PlatformUtil.isMac()) {
                 tryOrderArr = new String[] { "es2", "sw" };
             } else if (PlatformUtil.isIOS()) {
