@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id=":web:main" external.linked.project.path="$MODULE_DIR$/../../../../modules/javafx.web" external.root.project.path="$MODULE_DIR$/../../../.." external.system.id="GRADLE" external.system.module.group="org.openjfx" external.system.module.type="sourceSet" external.system.module.version="12-internal+0-2018-12-05-220855" type="JAVA_MODULE" version="4">
+<module external.linked.project.id=":web:main" external.linked.project.path="$MODULE_DIR$/../../../../modules/javafx.web" external.root.project.path="$MODULE_DIR$/../../../.." external.system.id="GRADLE" external.system.module.group="org.openjfx" external.system.module.type="sourceSet" external.system.module.version="12-internal+0-2018-12-13-155136" type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_11">
     <output url="file://$MODULE_DIR$/../../../../modules/javafx.web/out/production/classes" />
     <exclude-output />
-    <content url="file://$MODULE_DIR$/../../../../modules/javafx.web/build/gensrc/java">
-      <sourceFolder url="file://$MODULE_DIR$/../../../../modules/javafx.web/build/gensrc/java" isTestSource="false" />
-    </content>
+    <content url="file://$MODULE_DIR$/../../../../modules/javafx.web/build/gensrc/java" />
     <content url="file://$MODULE_DIR$/../../../../modules/javafx.web/src/main">
       <sourceFolder url="file://$MODULE_DIR$/../../../../modules/javafx.web/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../../../modules/javafx.web/src/main/resources" type="java-resource" />
@@ -15,8 +13,8 @@
     <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-jemalloc:3.2.1-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-opengl:3.2.1-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl:3.2.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.lwjgl:lwjgl-jemalloc:natives-windows:3.2.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.lwjgl:lwjgl-opengl:natives-windows:3.2.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.lwjgl:lwjgl:natives-windows:3.2.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.lwjgl:lwjgl-jemalloc:natives-linux:3.2.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.lwjgl:lwjgl-opengl:natives-linux:3.2.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.lwjgl:lwjgl:natives-linux:3.2.1-SNAPSHOT" level="project" />
   </component>
 </module>

@@ -24,6 +24,18 @@
       <module name="openjdk-jfx.systemTests.testapp4" target="11" />
       <module name="openjdk-jfx.systemTests.testapp5" target="11" />
       <module name="openjdk-jfx.systemTests.testapp6" target="11" />
+      <module name="openjfx.buildSrc.main" target="11" />
+      <module name="openjfx.buildSrc.test" target="11" />
+      <module name="openjfx.swt.main" target="11" />
+      <module name="openjfx.swt.test" target="11" />
+      <module name="openjfx.systemTests.main" target="11" />
+      <module name="openjfx.systemTests.test" target="11" />
+      <module name="openjfx.systemTests.testapp1" target="11" />
+      <module name="openjfx.systemTests.testapp2" target="11" />
+      <module name="openjfx.systemTests.testapp3" target="11" />
+      <module name="openjfx.systemTests.testapp4" target="11" />
+      <module name="openjfx.systemTests.testapp5" target="11" />
+      <module name="openjfx.systemTests.testapp6" target="11" />
       <module name="org.openjfx.base.main" target="11" />
       <module name="org.openjfx.base.shims" target="11" />
       <module name="org.openjfx.base.test" target="11" />
