@@ -58,7 +58,7 @@ import static com.sun.javafx.logging.PulseLogger.PULSE_LOGGING_ENABLED;
  * to render. Also invokes code to print dirty opts and paint overdraw rectangles according
  * to debug flags.
  */
-abstract public class ViewPainter implements Runnable {
+abstract class ViewPainter implements Runnable {
     /**
      * An array of initially empty ROOT_PATHS. They are created on demand as
      * needed. Each path is associated with a different dirty region. We have
@@ -444,8 +444,8 @@ abstract public class ViewPainter implements Runnable {
     }
 
     private void doPaint(Graphics g, NodePath renderRootPath) {
-        if(begin_doPaint != null)
-            begin_doPaint.run();
+        if(begin != null)
+            begin.run();
         // Null path indicates that occlusion culling is not used
         if (renderRootPath != null) {
             if (renderRootPath.isEmpty()) {
@@ -486,7 +486,7 @@ abstract public class ViewPainter implements Runnable {
             end_doPaint.run();
     }
 
-    public static Runnable begin_doPaint = null;
-    public static Runnable clear_doPaint = null;
-    public static Runnable end_doPaint = null;
+    static Runnable begin = null;
+    static Runnable clear_doPaint = null;
+    static Runnable end_doPaint = null;
 }

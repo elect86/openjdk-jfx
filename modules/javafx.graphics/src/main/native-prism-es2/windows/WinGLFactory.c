@@ -319,6 +319,23 @@ JNIEXPORT jlong JNICALL Java_com_sun_prism_es2_WinGLFactory_nInitialize
     ctxInfo->versionNumbers[1] = versionNumbers[1];
     ctxInfo->gl2 = JNI_TRUE;
 
+    fprintf(stderr, "context %p\n", (void *)&ctxInfo->hglrc);
+//    fprintf(stderr, "context %p\n", (void *)&ctxInfo->versionStr);
+//    fprintf(stderr, "context %p\n", (void *)&ctxInfo->vendorStr);
+    fprintf(stderr, "context %p\n", (void *)&ctxInfo->state);
+    fprintf(stderr, "context %p\n", (void *)&ctxInfo->vbFloatData);
+//    fprintf(stderr, "context %p\n", (void *)&ctxInfo->state.clearColor);
+//    fprintf(stderr, "context %p\n", (void *)&ctxInfo->state.clearColor[0]);
+//    fprintf(stderr, "context %p\n", (void *)&ctxInfo->state.clearColor[1]);
+//    fprintf(stderr, "context %p\n", (void *)&ctxInfo->state.clearColor[2]);
+//    fprintf(stderr, "context %p\n", (void *)&ctxInfo->state.clearColor[3]);
+//    fprintf(stderr, "context %p\n", (void *)&ctxInfo->state.vSyncEnabled);
+//    fprintf(stderr, "context %p\n", (void *)&ctxInfo->state.cullEnable);
+//    fprintf(stderr, "context %p\n", (void *)&ctxInfo->state.cullMode);
+//    fprintf(stderr, "context %p\n", (void *)&ctxInfo->state.fillMode);
+//    fprintf(stderr, "context %p\n", (void *)&ctxInfo->state.fbo);
+//    fprintf(stderr, "context %p\n", (void *)&ctxInfo->vbFloatData);
+
     printAndReleaseResources(hwnd, hglrc, hdc, szAppName, NULL);
     return ptr_to_jlong(ctxInfo);
 }

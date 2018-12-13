@@ -107,6 +107,8 @@ JNIEXPORT jlong JNICALL Java_com_sun_prism_es2_WinGLDrawable_nGetDummyDrawable
     // Use the dummyHdc that was already created in the pfInfo
     // since this is an non-onscreen drawable.
     dInfo->hdc = pfInfo->dummyHdc;
+//    fprintf(stderr, "hdc %p\n", &dInfo->onScreen);
+//    fprintf(stderr, "hdc %p\n", &dInfo->hdc);
     dInfo->hwnd = pfInfo->dummyHwnd;
     dInfo->onScreen = JNI_FALSE;
 

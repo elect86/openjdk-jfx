@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id=":graphics:test" external.linked.project.path="$MODULE_DIR$/../../../../modules/javafx.graphics" external.root.project.path="$MODULE_DIR$/../../../.." external.system.id="GRADLE" external.system.module.group="org.openjfx" external.system.module.type="sourceSet" external.system.module.version="12-internal+0-2018-12-13-160320" type="JAVA_MODULE" version="4">
+<module external.linked.project.id=":graphics:test" external.linked.project.path="$MODULE_DIR$/../../../../modules/javafx.graphics" external.root.project.path="$MODULE_DIR$/../../../.." external.system.id="GRADLE" external.system.module.group="org.openjfx" external.system.module.type="sourceSet" external.system.module.version="12-internal+0-2018-12-09-130358" type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_11">
     <output-test url="file://$MODULE_DIR$/../../../../modules/javafx.graphics/out/test/classes" />
     <exclude-output />
@@ -10,13 +10,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="org.openjfx.graphics.main" />
-    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-jemalloc:3.2.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-opengl:3.2.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl:3.2.1-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Gradle: junit:junit:4.8.2" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.lwjgl:lwjgl-jemalloc:natives-linux:3.2.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.lwjgl:lwjgl-opengl:natives-linux:3.2.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.lwjgl:lwjgl:natives-linux:3.2.1-SNAPSHOT" level="project" />
   </component>
   <component name="TestModuleProperties" production-module="org.openjfx.graphics.main" />
 </module>

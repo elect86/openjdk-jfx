@@ -105,7 +105,7 @@ String cygpath(String path) {
     if (!IS_WINDOWS) return path;
     if (path == null || "".equals(path)) return path;
     String ret = path.replaceAll('\\\\', '/')
-    logger.info("Converting path '$path' via cygpath to " + ret)
+    logger.info("Converting path '$path' via cygpath to "+ret)
     return ret
 }
 
@@ -124,7 +124,7 @@ String cygpathExe(String path) {
     if (!IS_WINDOWS) return path;
     if (path == null || "".equals(path)) return path;
     String ret = path.replaceAll('/', '\\\\')
-    logger.info("Converting path '$path' via cygpath to " + ret)
+    logger.info("Converting path '$path' via cygpath to "+ret)
     return ret + ".exe"
 }
 
@@ -214,10 +214,7 @@ void setupTools(String name, Closure loader, Closure processor) {
         properties.load(propStream);
         processor(properties);
     } finally {
-        try {
-            propStream.close()
-        } catch (Exception e) {
-        }
+        try { propStream.close() } catch (Exception e) { }
     }
 }
 
@@ -329,10 +326,10 @@ def javaHome = envJavaHome == null || envJavaHome.equals("") ? System.getPropert
 def javaHomeFile = file(javaHome)
 defineProperty("JDK_HOME",
         javaHomeFile.name == "jre" ?
-                javaHomeFile.getParent().toString() :
-                javaHomeFile.name.startsWith("jre") ?
-                        new File(javaHomeFile.getParent(), "jdk1.${javaHomeFile.name.substring(3)}.0").toString() :
-                        javaHome) // we have to bail and set it to something and this is as good as any!
+        javaHomeFile.getParent().toString() :
+        javaHomeFile.name.startsWith("jre") ?
+        new File(javaHomeFile.getParent(), "jdk1.${javaHomeFile.name.substring(3)}.0").toString() :
+        javaHome) // we have to bail and set it to something and this is as good as any!
 ext.JAVA_HOME = JDK_HOME
 
 defineProperty("JAVA", cygpathExe("$JDK_HOME/bin/java"))
@@ -406,10 +403,10 @@ defineProperty("BUILD_TOOLS_DOWNLOAD_SCRIPT", "")
 // Define the SWT.jar that we are going to have to download during the build process based
 // on what platform we are compiling from (not based on our target).
 ext.SWT_FILE_NAME = IS_MAC ? "org.eclipse.swt.cocoa.macosx.x86_64_3.105.3.v20170228-0512" :
-        IS_WINDOWS && IS_64 ? "org.eclipse.swt.win32.win32.x86_64_3.105.3.v20170228-0512" :
-                IS_WINDOWS && !IS_64 ? "org.eclipse.swt.win32.win32.x86_3.105.3.v20170228-0512" :
-                        IS_LINUX && IS_64 ? "org.eclipse.swt.gtk.linux.x86_64_3.105.3.v20170228-0512" :
-                                IS_LINUX && !IS_64 ? "org.eclipse.swt.gtk.linux.x86_3.105.3.v20170228-0512" : ""
+    IS_WINDOWS && IS_64 ? "org.eclipse.swt.win32.win32.x86_64_3.105.3.v20170228-0512" :
+    IS_WINDOWS && !IS_64 ? "org.eclipse.swt.win32.win32.x86_3.105.3.v20170228-0512" :
+    IS_LINUX && IS_64 ? "org.eclipse.swt.gtk.linux.x86_64_3.105.3.v20170228-0512" :
+    IS_LINUX && !IS_64 ? "org.eclipse.swt.gtk.linux.x86_3.105.3.v20170228-0512" : ""
 
 // Specifies whether to run full tests (true) or smoke tests (false)
 defineProperty("FULL_TEST", "false")
@@ -471,7 +468,6 @@ defineProperty("INCLUDE_NULL3D", "false")
 ext.IS_INCLUDE_NULL3D = Boolean.parseBoolean(INCLUDE_NULL3D)
 
 // Specifies whether to include the ES2 pipeline if available
-//defineProperty("INCLUDE_ES2", IS_WINDOWS ? "false" : "true")
 defineProperty("INCLUDE_ES2", "true")
 ext.IS_INCLUDE_ES2 = Boolean.parseBoolean(INCLUDE_ES2)
 
@@ -494,7 +490,7 @@ if (IS_MAC) {
 
 // The following properties should be left alone by developers and set only from Hudson.
 defineProperty("HUDSON_JOB_NAME", "not_hudson")
-defineProperty("HUDSON_BUILD_NUMBER", "0000")
+defineProperty("HUDSON_BUILD_NUMBER","0000")
 defineProperty("PROMOTED_BUILD_NUMBER", "0")
 defineProperty("MILESTONE_FCS", "false")
 ext.IS_MILESTONE_FCS = Boolean.parseBoolean(MILESTONE_FCS)
@@ -652,12 +648,12 @@ void fetchExternalTools(String configName, List packages, File destdir, boolean 
         def List<String> fetchedPackages = []
         def int fetchCount = 0
 
-        packages.each { pkgname ->
+        packages.each { pkgname->
             def int dotdex = pkgname.lastIndexOf('.')
             def int dashdex = pkgname.lastIndexOf('-')
-            def String basename = pkgname.substring(0, dashdex)
-            def String ver = pkgname.substring(dashdex + 1, dotdex)
-            def String ext = pkgname.substring(dotdex + 1)
+            def String basename = pkgname.substring(0,dashdex)
+            def String ver = pkgname.substring(dashdex+1,dotdex)
+            def String ext = pkgname.substring(dotdex+1)
             def File pkgdir = file("$destdir/$basename-$ver")
 
             if (!pkgdir.isDirectory()) {
@@ -684,7 +680,7 @@ void fetchExternalTools(String configName, List packages, File destdir, boolean 
             }
 
             // unpack the fetched packages
-            fetchedPackages.each { pkgname ->
+            fetchedPackages.each { pkgname->
                 logger.quiet "expanding the package $pkgname"
                 def srcball = file("${destdir}/${pkgname}")
 
@@ -692,7 +688,7 @@ void fetchExternalTools(String configName, List packages, File destdir, boolean 
                     throw new GradleException("Failed to fetch $pkgname");
                 }
 
-                def String basename = pkgname.substring(0, pkgname.lastIndexOf("."))
+                def String basename = pkgname.substring(0,pkgname.lastIndexOf("."))
                 def File pkgdir = file("$destdir/$basename")
 
                 if (pkgname.endsWith(".tgz") || pkgname.endsWith("tar.gz")) {
@@ -702,7 +698,7 @@ void fetchExternalTools(String configName, List packages, File destdir, boolean 
                         exec {
                             workingDir pkgdir
                             commandLine "tar", "zxf", "${srcball}"
-                        }
+                         }
                     } else {
                         copy {
                             from tarTree(resources.gzip("${srcball}"))
@@ -710,10 +706,10 @@ void fetchExternalTools(String configName, List packages, File destdir, boolean 
                         }
                     }
                 } else if (pkgname.endsWith(".zip")) {
-                    copy {
-                        from zipTree("${srcball}")
-                        into pkgdir
-                    }
+                     copy {
+                         from zipTree("${srcball}")
+                         into pkgdir
+                     }
                 } else {
                     throw new GradleException("Unhandled package type for compile package ${pkgname}")
                 }
@@ -725,8 +721,8 @@ void fetchExternalTools(String configName, List packages, File destdir, boolean 
     } else { // !doFetch - so just check they are present
         // check that all the dirs are really there
         def List<String> errors = []
-        packages.each { pkgname ->
-            def String basename = pkgname.substring(0, pkgname.lastIndexOf("."))
+        packages.each { pkgname->
+            def String basename = pkgname.substring(0,pkgname.lastIndexOf("."))
             def File pkgdir = file("$destdir/$basename")
 
             if (!pkgdir.isDirectory()) {
@@ -747,8 +743,8 @@ void fetchExternalTools(String configName, List packages, File destdir, boolean 
 void ant(String conf,   // platform configuration
          String dir,    // directory to run from
          String target, // ant target
-         List<String> params // parameters (usually -Dxxx=yyy)
-) {
+         List<String>  params // parameters (usually -Dxxx=yyy)
+         ) {
     // Try to use ANT_HOME
     String antHomeEnv = System.getenv("ANT_HOME")
     String antHome = antHomeEnv != null ? cygpath(antHomeEnv) : null;
@@ -760,15 +756,15 @@ void ant(String conf,   // platform configuration
         environment("JAVA_HOME", JDK_HOME)
         if (IS_WINDOWS) {
             environment([
-                    "VCINSTALLDIR": WINDOWS_VS_VCINSTALLDIR,
-                    "VSINSTALLDIR": WINDOWS_VS_VSINSTALLDIR,
-                    "DEVENVDIR"   : WINDOWS_VS_DEVENVDIR,
-                    "MSVCDIR"     : WINDOWS_VS_MSVCDIR,
-                    "INCLUDE"     : WINDOWS_VS_INCLUDE,
-                    "LIB"         : WINDOWS_VS_LIB,
-                    "LIBPATH"     : WINDOWS_VS_LIBPATH,
-                    "DXSDK_DIR"   : WINDOWS_DXSDK_DIR,
-                    "PATH"        : WINDOWS_VS_PATH
+                    "VCINSTALLDIR"         : WINDOWS_VS_VCINSTALLDIR,
+                    "VSINSTALLDIR"         : WINDOWS_VS_VSINSTALLDIR,
+                    "DEVENVDIR"            : WINDOWS_VS_DEVENVDIR,
+                    "MSVCDIR"              : WINDOWS_VS_MSVCDIR,
+                    "INCLUDE"              : WINDOWS_VS_INCLUDE,
+                    "LIB"                  : WINDOWS_VS_LIB,
+                    "LIBPATH"              : WINDOWS_VS_LIBPATH,
+                    "DXSDK_DIR"            : WINDOWS_DXSDK_DIR,
+                    "PATH"                 : WINDOWS_VS_PATH
             ]);
             commandLine "cmd", "/c", ant, "-Dbuild.compiler=javac1.7"
         } else {
@@ -782,7 +778,7 @@ void ant(String conf,   // platform configuration
             }
         }
         if (params != null) {
-            params.each() { s ->
+            params.each() { s->
                 args(s)
             }
         }
@@ -797,7 +793,7 @@ List<String> computeLibraryPath(boolean working) {
     List<String> lp = []
 
     if (HAS_JAVAFX_MODULES) {
-        List<String> modsWithNative = ['graphics', 'media', 'web']
+        List<String> modsWithNative = [ 'graphics', 'media', 'web' ]
 
         // the build/modular-sdk area
         def platformPrefix = ""
@@ -870,7 +866,7 @@ List<String> computePatchModuleArgs(List<String> deps, boolean test, boolean inc
         pma += mp
 
         String addm = null
-        deps.each { String projname ->
+        deps.each {String projname ->
             def proj = project(projname)
             if (proj.hasProperty("moduleName") && proj.buildModule) {
                 if (addm == null) {
@@ -894,8 +890,8 @@ List<String> computePatchModuleArgs(List<String> deps, boolean test, boolean inc
 
 // Return a list containing the --upgrade-module-path or --module-path
 // used with Javac
-List<String> computeModulePathArgs(String pname, List<String> deps, boolean test) {
-    List<String> mpa = HAS_JAVAFX_MODULES ? ['--upgrade-module-path'] : ['--module-path']
+List<String> computeModulePathArgs(String  pname, List<String> deps, boolean test) {
+    List<String> mpa = HAS_JAVAFX_MODULES ? [ '--upgrade-module-path' ] : [ '--module-path' ]
     String mp = null
     deps.each { String projname ->
         def proj = project(projname)
@@ -930,7 +926,7 @@ List<String> computeModulePathArgs(String pname, List<String> deps, boolean test
 
     if (!HAS_JAVAFX_MODULES) {
         String addm = null
-        deps.each { String projname ->
+        deps.each {String projname ->
             def proj = project(projname)
             // for a non test set of args, we don't want the current module in the list
             // for a test test, we do need it to update what we built
@@ -962,41 +958,41 @@ void writeRunArgsFile(File dest, List<String> libpath, List<String> modpath, Lis
     logger.info("Creating file ${dest.path}")
 
     if (libpath != null) {
-        dest << "-Djava.library.path=\"\\\n"
-        libpath.each() { e ->
+        dest <<  "-Djava.library.path=\"\\\n"
+        libpath.each() { e->
             dest << "  "
             dest << e
             dest << File.pathSeparator
             dest << "\\\n"
         }
-        dest << "  \"\n"
+        dest <<  "  \"\n"
     }
 
     if (HAS_JAVAFX_MODULES) {
         modpath.each { e ->
-            dest << "--patch-module=\""
+            dest <<  "--patch-module=\""
             dest << e
             dest << "\"\n"
         }
     } else {
         if (modpath.size() == 1) {
-            dest << "--module-path=\""
+            dest <<  "--module-path=\""
             dest << modpath[0]
             dest << "\"\n"
         } else {
-            dest << "--module-path=\"\\\n"
-            modpath.each() { e ->
+            dest <<  "--module-path=\"\\\n"
+            modpath.each() { e->
                 dest << "  "
                 dest << e
                 dest << File.pathSeparator
                 dest << "\\\n"
             }
-            dest << "  \"\n"
+            dest <<  "  \"\n"
         }
     }
 
     if (modules != null) {
-        dest << "--add-modules="
+        dest <<  "--add-modules="
         dest << modules.join(",")
         dest << "\n"
     }
@@ -1008,9 +1004,9 @@ void commonModuleSetup(Project p, List<String> moduleChain) {
     p.ext.moduleChain = moduleChain
 
     if (p.hasProperty("moduleName")) {
-        p.ext.moduleDir = new File(p.sourceSets.main.java.outputDir, "${p.moduleName}")
+        p.ext.moduleDir = new File (p.sourceSets.main.java.outputDir, "${p.moduleName}")
         if (p.sourceSets.hasProperty('shims')) {
-            p.ext.moduleShimsDir = new File(p.sourceSets.shims.java.outputDir, "${p.moduleName}")
+            p.ext.moduleShimsDir = new File (p.sourceSets.shims.java.outputDir, "${p.moduleName}")
         }
     }
 
@@ -1020,10 +1016,10 @@ void commonModuleSetup(Project p, List<String> moduleChain) {
     }
 
     p.ext.testModulePathArgs = computePatchModuleArgs(moduleChain, true, false)
-    p.ext.patchModuleArgs = computePatchModuleArgs(moduleChain, false, true)
+    p.ext.patchModuleArgs = computePatchModuleArgs(moduleChain ,false, true)
     p.ext.testPatchModuleArgs = computePatchModuleArgs(moduleChain, true, true)
 
-    moduleChain.each() { e ->
+    moduleChain.each() {e ->
         if (!e.equals(p.name)) {
             p.compileJava.dependsOn(project(e).classes)
             p.compileTestJava.dependsOn(project(e).testClasses)
@@ -1031,7 +1027,7 @@ void commonModuleSetup(Project p, List<String> moduleChain) {
     }
 
     // read in any addExports file
-    File addExportsFile = new File(p.projectDir, "src/test/addExports")
+    File addExportsFile = new File(p.projectDir,"src/test/addExports")
     if (addExportsFile.exists()) {
         List<String> ae = []
         addExportsFile.eachLine { line ->
@@ -1040,7 +1036,7 @@ void commonModuleSetup(Project p, List<String> moduleChain) {
                 ae += line.split(' ')
             }
         }
-        p.ext.testAddExports = ae.flatten()
+        p.ext.testAddExports  = ae.flatten()
     }
 
     // read in the temporary addExports file EXTRAADDEXPORTS)
@@ -1100,7 +1096,7 @@ if (BUILD_TOOLS_DOWNLOAD_SCRIPT != "") {
 // such as mac.gradle and linux.gradle and armhf.gradle. Additionally, the developer
 // can specify COMPILE_FLAGS_FILE to be a URL or path to a different gradle file
 // that will contain the appropriate flags.
-defineProperty("COMPILE_FLAGS_FILES", COMPILE_TARGETS.split(",").collect { "buildSrc/${it.trim()}.gradle" }.join(","))
+defineProperty("COMPILE_FLAGS_FILES", COMPILE_TARGETS.split(",").collect {"buildSrc/${it.trim()}.gradle"}.join(","))
 if (COMPILE_TARGETS == "all") {
     def tmp = []
     File buildSrcDir = file("buildSrc")
@@ -1113,8 +1109,8 @@ if (COMPILE_TARGETS == "all") {
             }
         }
     }
-    COMPILE_FLAGS_FILES = tmp.collect { "buildSrc/${it}.gradle" }.join(",")
-    COMPILE_TARGETS = tmp.collect { "${it.toLowerCase()}" }.join(",")
+    COMPILE_FLAGS_FILES = tmp.collect { "buildSrc/${it}.gradle"}.join(",")
+    COMPILE_TARGETS = tmp.collect { "${it.toLowerCase()}"}.join(",")
 } else {
     COMPILE_FLAGS_FILES.split(",").each {
         logger.info("Applying COMPILE_FLAGS_FILE '$it'")
@@ -1124,12 +1120,12 @@ if (COMPILE_TARGETS == "all") {
 
 if (COMPILE_TARGETS != "") {
     def tmp = []
-    COMPILE_TARGETS.split(",").each { target ->
+    COMPILE_TARGETS.split(",").each {target ->
         if (project.ext["${target.toUpperCase(Locale.ROOT)}"].canBuild) {
             tmp.add(target)
         }
     }
-    COMPILE_TARGETS = tmp.collect { "${it.toLowerCase()}" }.join(",")
+    COMPILE_TARGETS = tmp.collect { "${it.toLowerCase()}"}.join(",")
 }
 
 // Sanity check the expected properties all exist
@@ -1181,10 +1177,10 @@ compileTargets { t ->
     // (for use when building apps) and a unique name for cross builds.
     if (rootProject.defaultHostTarget.equals(t.name)) {
         // use a simple common default for the "host" build
-        targetProperties.platformPrefix = ""
+        targetProperties.platformPrefix=""
     } else {
         // and a more complex one for cross builds
-        targetProperties.platformPrefix = "${t.name}-"
+        targetProperties.platformPrefix="${t.name}-"
     }
 }
 
@@ -1232,7 +1228,7 @@ if (gradle.gradleVersion != "4.8") {
     logger.warn("*****************************************************************");
     logger.warn("Unsupported gradle version $gradle.gradleVersion in use.");
     logger.warn("Only version 4.8 is supported. Use this version at your own risk");
-    if (err != "") logger.warn(err);
+    if ( err != "") logger.warn(err);
     logger.warn("*****************************************************************");
 }
 
@@ -1340,7 +1336,7 @@ ext.BUILD_SRC = rootProject.files("buildSrc/build/libs/buildSrc.jar")
 void addNative(Project project, String name) {
     // TODO if we want to handle 32/64 bit windows in the same build,
     // Then we will need to modify the win compile target to be win32 or win64
-    def capitalName = name.split("-").collect { it.capitalize() }.join()
+    def capitalName = name.split("-").collect{it.capitalize()}.join()
     def nativeTask = project.task("native$capitalName", group: "Build") {
         description = "Generates JNI headers, compiles, and builds native dynamic library for $name for all compile targets"
     }
@@ -1439,16 +1435,16 @@ void addJSL(Project project, String name, String pkg, List<String> addExports, C
         description = "Compile the $name JSL Compilers"
 
         classpath =
-                project.files(project.sourceSets.jslc.java.outputDir) +
-                        project.configurations.antlr
+               project.files(project.sourceSets.jslc.java.outputDir) +
+               project.configurations.antlr
         source = [project.file("src/main/jsl-$lowerName")]
         destinationDir = project.file("$project.buildDir/classes/jsl-compilers/$lowerName")
 
         options.compilerArgs.addAll([
-                "-implicit:none",
-                "--module-path", modulePath,
-                "--add-modules=javafx.graphics"
-        ])
+            "-implicit:none",
+            "--module-path", modulePath,
+            "--add-modules=javafx.graphics"
+            ])
         if (addExports != null) {
             options.compilerArgs.addAll(addExports)
         }
@@ -1490,7 +1486,7 @@ void addJSL(Project project, String name, String pkg, List<String> addExports, C
     }
 
     project.processShaders.dependsOn(processShaders)
-    project.sourceSets.shaders.output.dir("$project.buildDir/gensrc/jsl-$lowerName", builtBy: processShaders)
+    project.sourceSets.shaders.output.dir("$project.buildDir/gensrc/jsl-$lowerName", builtBy: processShaders )
 
     def processShimsShaders = project.task("process${name}ShimsShaders",
             dependsOn: [generateShaders, compileHLSLShaders],
@@ -1527,7 +1523,7 @@ void addMavenPublication(Project project, List<String> projectDependencies) {
     }
 
     gradle.taskGraph.whenReady { g ->
-        project.tasks.findAll { it.name == 'generatePomFileForJavafxPublication' }.each { it ->
+        project.tasks.findAll { it.name == 'generatePomFileForJavafxPublication'}.each { it ->
             it.doLast {
                 copy {
                     into project.file("${project.buildDir}/publications/javafx")
@@ -1549,8 +1545,8 @@ void addMavenPublication(Project project, List<String> projectDependencies) {
                 def repositoryPassword = project.hasProperty('repositoryPassword') ? project.getProperty('repositoryPassword') : ""
                 url repositoryUrl
                 credentials {
-                    username repositoryUsername
-                    password repositoryPassword
+                   username repositoryUsername
+                   password repositoryPassword
                 }
             }
         }
@@ -1587,7 +1583,7 @@ void addMavenPublication(Project project, List<String> projectDependencies) {
                                 projectDependency.appendNode("groupId", MAVEN_GROUP_ID)
                                 projectDependency.appendNode("artifactId", "javafx-$dep")
                                 projectDependency.appendNode("version", MAVEN_VERSION)
-                            }
+                           }
                         }
                     }
                 }
@@ -1626,7 +1622,7 @@ int compareJdkVersion(String a, String b) {
 
     for (int i = 0; i < 4; i++) {
         if (aIntArr[i] < bIntArr[i]) return -1;
-        if (aIntArr[i] > bIntArr[i]) return 1;
+        if (aIntArr[i] > bIntArr[i]) return  1;
     }
     return 0;
 }
@@ -1657,27 +1653,27 @@ task createTestArgfiles {
 
 
 /*****************************************************************************
- *        Project definitions (dependencies, etc)                             *
- *****************************************************************************/
+*        Project definitions (dependencies, etc)                             *
+*****************************************************************************/
 
 void addJCov(p, test) {
     test.doFirst {
         def jcovJVMArgument =
                 "include=javafx," +
-                        "include=com.sun.javafx," +
-                        "include=com.sun.glass," +
-                        "include=com.sun.openpisces," +
-                        "include=com.sun.pisces," +
-                        "include=com.sun.prism," +
-                        "include=com.sun.scenario," +
-                        "include=com.sun.webkit," +
-                        "exclude=com," +
-                        "exclude=java," +
-                        "exclude=javax," +
-                        "exclude=\"**.test\"," +
-                        "exclude=\"**.*Test\"," +
-                        "file=build/reports/jcov/report.xml," +
-                        "merge=merge";
+                "include=com.sun.javafx," +
+                "include=com.sun.glass," +
+                "include=com.sun.openpisces," +
+                "include=com.sun.pisces," +
+                "include=com.sun.prism," +
+                "include=com.sun.scenario," +
+                "include=com.sun.webkit," +
+                "exclude=com," +
+                "exclude=java," +
+                "exclude=javax," +
+                "exclude=\"**.test\"," +
+                "exclude=\"**.*Test\"," +
+                "file=build/reports/jcov/report.xml," +
+                "merge=merge";
         test.jvmArgs("-javaagent:${p.configurations.testCompile.files.find { it.name.startsWith('jcov') }}=$jcovJVMArgument");
         p.mkdir p.file("build/reports/jcov")
     }
@@ -1693,7 +1689,7 @@ void addJCov(p, test) {
                         "-exclude", "\"**.test\"",
                         "-exclude", "\"**.*Test\"",
                         "-output", ".",
-                        "-source", p.sourceSets.main.java.srcDirs.collect { p.file(it) }.join(":"),
+                        "-source", p.sourceSets.main.java.srcDirs.collect{p.file(it)}.join(":"),
                         "report.xml"
                 ]
             }
@@ -1756,7 +1752,7 @@ allprojects {
     // We want to configure all projects as java projects and use the same compile settings
     // etc, except for the root project which we just want to ignore (and for now media)
     if (project == rootProject) {
-        return
+       return
     }
     if (project.path.startsWith(":apps")) {
         // Lets handle the apps tree differently, as it is a collection of ant builds,
@@ -1773,7 +1769,7 @@ allprojects {
     // setup this dependency here.
     dependencies {
         testCompile group: "junit", name: "junit", version: "4.8.2"
-        if (BUILD_CLOSED && DO_JCOV) {
+        if (BUILD_CLOSED && DO_JCOV)  {
             testCompile name: "jcov"
         }
     }
@@ -1816,25 +1812,25 @@ allprojects {
 // They need to contain the full paths to the sources and the * will be
 // used to infer the module name that is used.
 project.ext.defaultModuleSourcePath =
-        cygpath(rootProject.projectDir.path + '/modules/*/src/main/java') +
-                File.pathSeparator +
-                cygpath(rootProject.projectDir.path + '/modules/*/build/gensrc/{java,jsl-decora,jsl-prism}')
+    cygpath(rootProject.projectDir.path + '/modules/*/src/main/java') +
+        File.pathSeparator  +
+    cygpath(rootProject.projectDir.path + '/modules/*/build/gensrc/{java,jsl-decora,jsl-prism}')
 
 // graphics pass one
 project.ext.defaultModuleSourcePath_GraphicsOne =
-        cygpath(rootProject.projectDir.path + '/modules/*/src/main/java') +
-                File.pathSeparator +
-                cygpath(rootProject.projectDir.path + '/modules/*/build/gensrc/{java,jsl-decora,jsl-prism}')
+    cygpath(rootProject.projectDir.path + '/modules/*/src/main/java') +
+        File.pathSeparator  +
+    cygpath(rootProject.projectDir.path + '/modules/*/build/gensrc/{java,jsl-decora,jsl-prism}')
 
 // web pass one
 project.ext.defaultModuleSourcePath_WebOne =
-        cygpath(rootProject.projectDir.path + '/modules/*/src/main/java')
+    cygpath(rootProject.projectDir.path + '/modules/*/src/main/java')
 
 // Compiling the test shim files too.
 project.ext.defaultModuleSourcePathShim =
-        cygpath(rootProject.projectDir.path + '/modules/*/src/{main,shims}/java') +
-                File.pathSeparator +
-                cygpath(rootProject.projectDir.path + '/modules/*/build/gensrc/{java,jsl-decora,jsl-prism}')
+    cygpath(rootProject.projectDir.path + '/modules/*/src/{main,shims}/java') +
+        File.pathSeparator  +
+    cygpath(rootProject.projectDir.path + '/modules/*/build/gensrc/{java,jsl-decora,jsl-prism}')
 
 // The "base" project is our first module and the most basic one required for
 // all other modules. It is useful even for non-GUI applications.
@@ -1854,7 +1850,7 @@ project(":base") {
         testCompile group: "junit", name: "junit", version: "4.8.2"
     }
 
-    commonModuleSetup(project, ['base'])
+    commonModuleSetup(project, [ 'base' ])
 
     project.ext.moduleSourcePath = defaultModuleSourcePath
     project.ext.moduleSourcePathShim = defaultModuleSourcePathShim
@@ -1862,19 +1858,19 @@ project(":base") {
     // We need to take the VersionInfo.java file and replace the various
     // properties within it
     def replacements = [
-            "BUILD_TIMESTAMP"      : BUILD_TIMESTAMP,
-            "HUDSON_JOB_NAME"      : HUDSON_JOB_NAME,
-            "HUDSON_BUILD_NUMBER"  : HUDSON_BUILD_NUMBER,
-            "PROMOTED_BUILD_NUMBER": PROMOTED_BUILD_NUMBER,
-            "PRODUCT_NAME"         : PRODUCT_NAME,
-            "RELEASE_VERSION"      : RELEASE_VERSION,
-            "RELEASE_SUFFIX"       : RELEASE_SUFFIX];
+        "BUILD_TIMESTAMP": BUILD_TIMESTAMP,
+        "HUDSON_JOB_NAME": HUDSON_JOB_NAME,
+        "HUDSON_BUILD_NUMBER": HUDSON_BUILD_NUMBER,
+        "PROMOTED_BUILD_NUMBER": PROMOTED_BUILD_NUMBER,
+        "PRODUCT_NAME": PRODUCT_NAME,
+        "RELEASE_VERSION": RELEASE_VERSION,
+        "RELEASE_SUFFIX": RELEASE_SUFFIX];
     task processVersionInfo(type: Copy, description: "Replace params in VersionInfo and copy file to destination") {
         doFirst { mkdir "$buildDir/gensrc/java" }
         from "src/main/version-info"
         into "$buildDir/gensrc/java/com/sun/javafx/runtime"
-        filter { line ->
-            replacements.each() { k, v ->
+        filter {line->
+            replacements.each() {k, v ->
                 line = line.replace("@$k@", v.toString());
             }
             line
@@ -1914,44 +1910,22 @@ project(":graphics") {
         stub
     }
 
-    repositories {
-        maven { setUrl("https://oss.sonatype.org/content/repositories/snapshots/") }
-    }
-
     dependencies {
-
         stubCompile group: "junit", name: "junit", version: "4.8.2"
 
         antlr group: "org.antlr", name: "antlr-complete", version: "3.5.2"
-
-        ext.lwjglVersion = "3.2.1-SNAPSHOT"
-        switch (org.gradle.internal.os.OperatingSystem.current()) {
-            case org.gradle.internal.os.OperatingSystem.WINDOWS:
-                ext.lwjglNatives = "natives-windows"
-                break
-            case org.gradle.internal.os.OperatingSystem.LINUX:
-                ext.lwjglNatives = "natives-linux"
-                break
-            case org.gradle.internal.os.OperatingSystem.MAC_OS:
-                ext.lwjglNatives = "natives-macos"
-                break
-        }
-        ["", "-jemalloc", "-opengl"].each {
-            compile "org.lwjgl:lwjgl$it:$lwjglVersion"
-            runtime "org.lwjgl:lwjgl$it:$lwjglVersion:$lwjglNatives"
-        }
     }
 
     project.ext.moduleSourcePath = defaultModuleSourcePath_GraphicsOne
     project.ext.moduleSourcePathShim = defaultModuleSourcePathShim
 
-    commonModuleSetup(project, ['base', 'graphics'])
+    commonModuleSetup(project, [ 'base', 'graphics' ])
 
     List<String> decoraAddExports = [
             '--add-exports=javafx.graphics/com.sun.scenario.effect=ALL-UNNAMED',
             '--add-exports=javafx.graphics/com.sun.scenario.effect.light=ALL-UNNAMED',
             '--add-exports=javafx.graphics/com.sun.scenario.effect.impl.state=ALL-UNNAMED'
-    ]
+            ]
     /*
     Graphics compilation is "complicated" by the generated shaders.
 
@@ -1993,11 +1967,11 @@ project(":graphics") {
         main = "org.antlr.Tool"
 
         args = [
-                "-Xconversiontimeout",
-                "30000",
-                "-o",
-                "$buildDir/gensrc/antlr",
-                "com/sun/scenario/effect/compiler/JSL.g"]
+            "-Xconversiontimeout",
+            "30000",
+            "-o",
+            "$buildDir/gensrc/antlr",
+            "com/sun/scenario/effect/compiler/JSL.g" ]
 
         inputs.dir wd
         outputs.dir file("$buildDir/gensrc/antlr")
@@ -2009,15 +1983,6 @@ project(":graphics") {
     compileJslcJava.classpath = project.configurations.antlr
 
     compileJava.dependsOn(compileJslcJava)
-
-    compileJava {
-        inputs.property("javafx.graphics", moduleName)
-        doFirst {
-            options.compilerArgs += "--module-path=$classpath.asPath"
-//            options.compilerArgs += "--add-modules=org.lwjgl"
-            classpath = files()
-        }
-    }
 
     // this task is the "second pass" compile of all of the module classes
     project.task("compileFullJava", type: JavaCompile, dependsOn: processShaders) {
@@ -2031,12 +1996,10 @@ project(":graphics") {
 
         destinationDir = project.sourceSets.main.java.outputDir
         options.compilerArgs.addAll([
-                '-h', "$buildDir/gensrc/headers/",  // Note: this creates the native headers
-                '-implicit:none',
-                '--module-source-path', defaultModuleSourcePath,
-                '--module-path', classpath.asPath
-        ])
-//        println(options.compilerArgs)
+            '-h', "$buildDir/gensrc/headers/",  // Note: this creates the native headers
+            '-implicit:none',
+            '--module-source-path', defaultModuleSourcePath
+            ] )
     }
     classes.dependsOn(compileFullJava)
 
@@ -2138,8 +2101,7 @@ project(":graphics") {
                 List futures = new ArrayList<Future>();
                 jobs.each { cmd ->
                     futures.add(executor.submit(new Runnable() {
-                        @Override
-                        public void run() {
+                        @Override public void run() {
                             try {
                                 exec {
                                     commandLine cmd
@@ -2154,7 +2116,7 @@ project(":graphics") {
                 // Looking for whether an exception occurred while executing any of the futures.
                 // By calling "get()" on each future an exception will be thrown if one had occurred
                 // on the background thread.
-                futures.each { it.get(); }
+                futures.each {it.get();}
             }
         }
 
@@ -2199,7 +2161,7 @@ project(":graphics") {
                 classpath += files("${project.projectDir}/src/jslc/resources")
 
                 classpath += files("$buildDir/classes/jsl-compilers/decora")
-                jvmArgs += "--module-path=$modulePath;$classpath.asPath"
+                jvmArgs += "--module-path=$modulePath"
                 jvmArgs += "--add-modules=javafx.graphics"
                 jvmArgs += decoraAddExports
                 args += ["-i", sourceDir, "-o", destinationDir, "-t", "-pkg", "com/sun/scenario/effect", "$settings.outputs", "$settings.fileName"]
@@ -2234,7 +2196,7 @@ project(":graphics") {
             def capitalVariant = variant.capitalize()
             def ccOutput = variant == "" ? nativeDir : file("$nativeDir/$variant")
 
-            def ccTask = task("compileDecoraNativeShaders$capitalTarget$capitalVariant", type: CCTask) {
+            def ccTask = task("compileDecoraNativeShaders$capitalTarget$capitalVariant", type: CCTask ) {
                 description = "Compiles Decora SSE natives for ${t.name}${capitalVariant != '' ? ' for variant ' + capitalVariant : ''}"
                 matches = ".*\\.cc"
                 source file("$buildDir/gensrc/jsl-decora")
@@ -2286,7 +2248,7 @@ project(":graphics") {
                 classpath += files(project.sourceSets.jslc.java.outputDir)
                 classpath += files(project.sourceSets.jslc.resources)
                 classpath += files("$buildDir/classes/jsl-compilers/prism",
-                        project.projectDir.path + "/src/main/jsl-prism") // for the .stg
+                    project.projectDir.path + "/src/main/jsl-prism") // for the .stg
                 args = ["-i", sourceDir, "-o", destinationDir, "-t", "-pkg", "com/sun/prism", "-d3d", "-es2", "-name", "$file"]
             }
         }
@@ -2302,7 +2264,7 @@ project(":graphics") {
     test {
         def cssDir = file("$buildDir/classes/java/main/${moduleName}/javafx")
         jvmArgs "-Djavafx.toolkit=test.com.sun.javafx.pgstub.StubToolkit",
-                "-DCSS_META_DATA_TEST_DIR=$cssDir"
+            "-DCSS_META_DATA_TEST_DIR=$cssDir"
         enableAssertions = true
         testLogging.exceptionFormat = "full"
         scanForTestClasses = false
@@ -2330,7 +2292,7 @@ project(":graphics") {
             libsDir.mkdirs();
 
             def allLibsPresent = true
-            def libNames = ["antlr-complete-3.5.2.jar"]
+            def libNames = [ "antlr-complete-3.5.2.jar" ]
             libNames.each { name ->
                 File f = new File(libsDir, name)
                 if (!f.exists()) allLibsPresent = false
@@ -2348,7 +2310,7 @@ project(":graphics") {
         }
     }
 
-    addMavenPublication(project, ['base'])
+    addMavenPublication(project, [ 'base' ])
 
 }
 
@@ -2367,70 +2329,40 @@ project(":controls") {
     project.ext.moduleSourcePath = defaultModuleSourcePath
     project.ext.moduleSourcePathShim = defaultModuleSourcePathShim
 
-    commonModuleSetup(project, ['base', 'graphics', 'controls'])
+    commonModuleSetup(project, [ 'base', 'graphics', 'controls' ])
 
     dependencies {
         testCompile project(":graphics").sourceSets.test.output
         testCompile project(":base").sourceSets.test.output
-
-        ext.lwjglVersion = "3.2.1-SNAPSHOT"
-        switch (org.gradle.internal.os.OperatingSystem.current()) {
-            case org.gradle.internal.os.OperatingSystem.WINDOWS:
-                ext.lwjglNatives = "natives-windows"
-                break
-            case org.gradle.internal.os.OperatingSystem.LINUX:
-                ext.lwjglNatives = "natives-linux"
-                break
-            case org.gradle.internal.os.OperatingSystem.MAC_OS:
-                ext.lwjglNatives = "natives-macos"
-                break
-        }
-        ["", "-jemalloc", "-opengl"].each {
-            compile "org.lwjgl:lwjgl$it:$lwjglVersion"
-            runtime "org.lwjgl:lwjgl$it:$lwjglVersion:$lwjglNatives"
-        }
-    }
-
-    repositories {
-        maven { setUrl("https://oss.sonatype.org/content/repositories/snapshots/") }
-    }
-
-    compileJava {
-        doFirst {
-            options.compilerArgs += "--module-path=$classpath.asPath"
-            classpath = files()
-        }
     }
 
     test {
         def cssDir = file("$buildDir/classes/java/main/${moduleName}/javafx")
         jvmArgs "-Djavafx.toolkit=test.com.sun.javafx.pgstub.StubToolkit",
-                "-DCSS_META_DATA_TEST_DIR=$cssDir"
+            "-DCSS_META_DATA_TEST_DIR=$cssDir"
     }
 
     def modulePath = "${project.sourceSets.main.java.outputDir}"
     modulePath += File.pathSeparator + "${rootProject.projectDir}/modules/javafx.graphics/build/classes/java/main"
     modulePath += File.pathSeparator + "${rootProject.projectDir}/modules/javafx.base/build/classes/java/main"
-    def a = "C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-jemalloc/3.2.1-SNAPSHOT/a7b99599619921dcd850007c3b1f506e82c5338e/lwjgl-jemalloc-3.2.1-SNAPSHOT.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-opengl/3.2.1-SNAPSHOT/d312c805bb61a833df46119f9c2201b8f27c86/lwjgl-opengl-3.2.1-SNAPSHOT.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl/3.2.1-SNAPSHOT/f458e525c255a91a6b8c3ffa07d4c66448797231/lwjgl-3.2.1-SNAPSHOT.jar"
-    modulePath += File.pathSeparator + a
     processResources {
-        doLast {
-            def cssFiles = fileTree(dir: "$moduleDir/com/sun/javafx/scene/control/skin")
-            cssFiles.include "**/*.css"
-            cssFiles.each { css ->
-                logger.info("converting CSS to BSS ${css}");
+      doLast {
+        def cssFiles = fileTree(dir: "$moduleDir/com/sun/javafx/scene/control/skin")
+        cssFiles.include "**/*.css"
+        cssFiles.each { css ->
+            logger.info("converting CSS to BSS ${css}");
 
-                javaexec {
-                    executable = JAVA
-                    workingDir = project.projectDir
-                    jvmArgs += patchModuleArgs
-                    jvmArgs += "--module-path=$modulePath"
-                    jvmArgs += "--add-modules=javafx.graphics,org.lwjgl"
-                    main = "com.sun.javafx.css.parser.Css2Bin"
-                    args css
-                }
+            javaexec {
+                executable = JAVA
+                workingDir = project.projectDir
+                jvmArgs += patchModuleArgs
+                jvmArgs += "--module-path=$modulePath"
+                jvmArgs += "--add-modules=javafx.graphics"
+                main = "com.sun.javafx.css.parser.Css2Bin"
+                args css
             }
         }
+      }
     }
 
     processShimsResources.dependsOn(project.task("copyShimBss", type: Copy) {
@@ -2439,7 +2371,7 @@ project(":controls") {
         include "**/*.bss"
     })
 
-    addMavenPublication(project, ['graphics'])
+    addMavenPublication(project, [ 'graphics' ])
 
 }
 
@@ -2463,38 +2395,9 @@ project(":swing") {
     project.ext.moduleSourcePath = defaultModuleSourcePath
     project.ext.moduleSourcePathShim = defaultModuleSourcePathShim
 
-    commonModuleSetup(project, ['base', 'graphics', 'swing'])
+    commonModuleSetup(project, [ 'base', 'graphics', 'swing' ])
 
     dependencies {
-        testCompile project(":graphics").sourceSets.test.output
-        testCompile project(":base").sourceSets.test.output
-        ext.lwjglVersion = "3.2.1-SNAPSHOT"
-        switch (org.gradle.internal.os.OperatingSystem.current()) {
-            case org.gradle.internal.os.OperatingSystem.WINDOWS:
-                ext.lwjglNatives = "natives-windows"
-                break
-            case org.gradle.internal.os.OperatingSystem.LINUX:
-                ext.lwjglNatives = "natives-linux"
-                break
-            case org.gradle.internal.os.OperatingSystem.MAC_OS:
-                ext.lwjglNatives = "natives-macos"
-                break
-        }
-        ["", "-jemalloc", "-opengl"].each {
-            compile "org.lwjgl:lwjgl$it:$lwjglVersion"
-            runtime "org.lwjgl:lwjgl$it:$lwjglVersion:$lwjglNatives"
-        }
-    }
-
-    repositories {
-        maven { setUrl("https://oss.sonatype.org/content/repositories/snapshots/") }
-    }
-
-    compileJava {
-        doFirst {
-            options.compilerArgs += "--module-path=$classpath.asPath"
-            classpath = files()
-        }
     }
 
     test {
@@ -2502,7 +2405,7 @@ project(":swing") {
     }
 
     if (COMPILE_SWING) {
-        addMavenPublication(project, ['graphics'])
+        addMavenPublication(project, [ 'graphics' ])
     }
 }
 
@@ -2514,7 +2417,7 @@ project(":swt") {
     // javafx.swt is an automatic module
     project.ext.buildModule = false
 
-    commonModuleSetup(project, ['base', 'graphics'])
+    commonModuleSetup(project, [ 'base', 'graphics' ])
 
     dependencies {
         compile name: SWT_FILE_NAME
@@ -2551,7 +2454,7 @@ project(":swt") {
             "--add-exports=javafx.graphics/com.sun.javafx.embed=ALL-UNNAMED",
             "--add-exports=javafx.graphics/com.sun.javafx.stage=ALL-UNNAMED",
             "--add-exports=javafx.graphics/com.sun.javafx.tk=ALL-UNNAMED",
-    ])
+            ])
 
     test {
         //enabled = IS_FULL_TEST && IS_SWT_TEST
@@ -2580,39 +2483,12 @@ project(":fxml") {
     project.ext.moduleSourcePath = defaultModuleSourcePath
     project.ext.moduleSourcePathShim = defaultModuleSourcePathShim
 
-    commonModuleSetup(project, ['base', 'graphics', 'controls', 'fxml'])
+    commonModuleSetup(project, [ 'base', 'graphics', 'controls', 'fxml' ])
 
 
     dependencies {
         testCompile project(":graphics").sourceSets.test.output
         testCompile project(":base").sourceSets.test.output
-        ext.lwjglVersion = "3.2.1-SNAPSHOT"
-        switch (org.gradle.internal.os.OperatingSystem.current()) {
-            case org.gradle.internal.os.OperatingSystem.WINDOWS:
-                ext.lwjglNatives = "natives-windows"
-                break
-            case org.gradle.internal.os.OperatingSystem.LINUX:
-                ext.lwjglNatives = "natives-linux"
-                break
-            case org.gradle.internal.os.OperatingSystem.MAC_OS:
-                ext.lwjglNatives = "natives-macos"
-                break
-        }
-        ["", "-jemalloc", "-opengl"].each {
-            compile "org.lwjgl:lwjgl$it:$lwjglVersion"
-            runtime "org.lwjgl:lwjgl$it:$lwjglVersion:$lwjglNatives"
-        }
-    }
-
-    repositories {
-        maven { setUrl("https://oss.sonatype.org/content/repositories/snapshots/") }
-    }
-
-    compileJava {
-        doFirst {
-            options.compilerArgs += "--module-path=$classpath.asPath"
-            classpath = files()
-        }
     }
 
     test {
@@ -2624,7 +2500,7 @@ project(":fxml") {
         classpath += files("$JDK_HOME/jre/lib/ext/nashorn.jar")
     }
 
-    addMavenPublication(project, ['controls'])
+    addMavenPublication(project, [ 'controls' ])
 
 }
 
@@ -2650,7 +2526,7 @@ project(":media") {
     project.ext.moduleSourcePath = defaultModuleSourcePath
     project.ext.moduleSourcePathShim = defaultModuleSourcePathShim
 
-    commonModuleSetup(project, ['base', 'graphics', 'media'])
+    commonModuleSetup(project, [ 'base', 'graphics', 'media' ])
 
     dependencies {
         if (IS_BUILD_LIBAV_STUBS) {
@@ -2659,27 +2535,6 @@ project(":media") {
             media name: "libav-12.1", ext: "tar.gz"
             media name: "ffmpeg-3.3.3", ext: "tar.gz"
         }
-
-        ext.lwjglVersion = "3.2.1-SNAPSHOT"
-        switch (org.gradle.internal.os.OperatingSystem.current()) {
-            case org.gradle.internal.os.OperatingSystem.WINDOWS:
-                ext.lwjglNatives = "natives-windows"
-                break
-            case org.gradle.internal.os.OperatingSystem.LINUX:
-                ext.lwjglNatives = "natives-linux"
-                break
-            case org.gradle.internal.os.OperatingSystem.MAC_OS:
-                ext.lwjglNatives = "natives-macos"
-                break
-        }
-        ["", "-jemalloc", "-opengl"].each {
-            compile "org.lwjgl:lwjgl$it:$lwjglVersion"
-            runtime "org.lwjgl:lwjgl$it:$lwjglVersion:$lwjglNatives"
-        }
-    }
-
-    repositories {
-        maven { setUrl("https://oss.sonatype.org/content/repositories/snapshots/") }
     }
 
     compileJava.dependsOn updateCacheIfNeeded
@@ -2687,22 +2542,18 @@ project(":media") {
     compileJava {
         // generate the native headers during compile
         options.compilerArgs.addAll([
-                '-h', "${project.buildDir}/gensrc/headers"
-        ])
-        doFirst {
-            options.compilerArgs += "--module-path=$classpath.asPath"
-            classpath = files()
-        }
+            '-h', "${project.buildDir}/gensrc/headers"
+            ])
     }
 
     compileToolsJava {
         enabled = IS_COMPILE_MEDIA
         def modulePath = "${project.sourceSets.main.java.outputDir}"
         options.compilerArgs.addAll([
-                "--module-path=$modulePath",
-                "--add-modules=javafx.media",
-                '--add-exports', 'javafx.media/com.sun.media.jfxmedia=ALL-UNNAMED'
-        ])
+            "--module-path=$modulePath",
+            "--add-modules=javafx.media",
+            '--add-exports', 'javafx.media/com.sun.media.jfxmedia=ALL-UNNAMED',
+            ])
     }
 
     project.ext.makeJobsFlag = IS_WINDOWS && IS_DEBUG_NATIVE ? "-j1" : "-j5";
@@ -2728,11 +2579,11 @@ project(":media") {
             exec {
                 commandLine("$JAVA");
                 args += patchModuleArgs
-                args += ["--module-path=$modulePath"]
-                args += ["--add-modules=javafx.media"]
-                args += ['--add-exports=javafx.media/com.sun.media.jfxmedia=ALL-UNNAMED']
-                args += ['-classpath', "${classpath.asPath}"]
-                args += ["headergen.HeaderGen", "$headerpath", "$srcRoot"]
+                args += [ "--module-path=$modulePath" ]
+                args += [ "--add-modules=javafx.media" ]
+                args +=  [ '--add-exports=javafx.media/com.sun.media.jfxmedia=ALL-UNNAMED' ]
+                args +=  [ '-classpath', "${classpath.asPath}" ]
+                args += [ "headergen.HeaderGen", "$headerpath", "$srcRoot" ]
             }
         }
         outputs.file(project.file("$headerpath"))
@@ -2742,7 +2593,7 @@ project(":media") {
         enabled = IS_COMPILE_MEDIA
     }
 
-    compileTargets { t ->
+    compileTargets { t->
         def targetProperties = project.rootProject.ext[t.upper]
         def nativeOutputDir = file("${buildDir}/native/${t.name}")
         def projectDir = t.name.startsWith("arm") ? "linux" : t.name
@@ -2758,16 +2609,16 @@ project(":media") {
 
             doLast {
                 exec {
-                    commandLine("make", "${makeJobsFlag}", "-C", "${nativeSrcDir}/jfxmedia/projects/${projectDir}")
+                    commandLine ("make", "${makeJobsFlag}", "-C", "${nativeSrcDir}/jfxmedia/projects/${projectDir}")
                     args("JAVA_HOME=${JDK_HOME}", "GENERATED_HEADERS_DIR=${generatedHeadersDir}",
-                            "OUTPUT_DIR=${nativeOutputDir}", "BUILD_TYPE=${buildType}", "BASE_NAME=jfxmedia",
-                            "COMPILE_PARFAIT=${compileParfait}",
-                            IS_64 ? "ARCH=x64" : "ARCH=x32",
-                            "CC=${mediaProperties.compiler}", "LINKER=${mediaProperties.linker}")
+                         "OUTPUT_DIR=${nativeOutputDir}", "BUILD_TYPE=${buildType}", "BASE_NAME=jfxmedia",
+                         "COMPILE_PARFAIT=${compileParfait}",
+                         IS_64 ? "ARCH=x64" : "ARCH=x32",
+                        "CC=${mediaProperties.compiler}", "LINKER=${mediaProperties.linker}")
 
                     if (t.name == "win") {
                         environment(WINDOWS_NATIVE_COMPILE_ENVIRONMENT)
-                        args("RESOURCE=${nativeOutputDir}/${buildType}/${WIN.media.jfxmediaRcFile}")
+                        args( "RESOURCE=${nativeOutputDir}/${buildType}/${WIN.media.jfxmediaRcFile}")
                     } else {
                         if (t.name.startsWith("arm")) {
                             args("EXTRA_CFLAGS=${mediaProperties.extra_cflags}", "EXTRA_LDFLAGS=${mediaProperties.extra_ldflags}")
@@ -2787,10 +2638,10 @@ project(":media") {
                 enabled = IS_COMPILE_MEDIA
                 doLast {
                     exec {
-                        commandLine("make", "${makeJobsFlag}", "-C", "${nativeSrcDir}/gstreamer/projects/${projectDir}/gstreamer-lite")
+                        commandLine ("make", "${makeJobsFlag}", "-C", "${nativeSrcDir}/gstreamer/projects/${projectDir}/gstreamer-lite")
                         args("OUTPUT_DIR=${nativeOutputDir}", "BUILD_TYPE=${buildType}", "BASE_NAME=gstreamer-lite",
-                                IS_64 ? "ARCH=x64" : "ARCH=x32", "CC=${mediaProperties.compiler}",
-                                "AR=${mediaProperties.ar}", "LINKER=${mediaProperties.linker}")
+                             IS_64 ? "ARCH=x64" : "ARCH=x32", "CC=${mediaProperties.compiler}",
+                             "AR=${mediaProperties.ar}", "LINKER=${mediaProperties.linker}")
 
                         if (t.name == "win") {
                             environment(WINDOWS_NATIVE_COMPILE_ENVIRONMENT)
@@ -2805,10 +2656,10 @@ project(":media") {
 
                 doLast {
                     exec {
-                        commandLine("make", "${makeJobsFlag}", "-C", "${nativeSrcDir}/gstreamer/projects/${projectDir}/fxplugins")
+                        commandLine ("make", "${makeJobsFlag}", "-C", "${nativeSrcDir}/gstreamer/projects/${projectDir}/fxplugins")
                         args("OUTPUT_DIR=${nativeOutputDir}", "BUILD_TYPE=${buildType}", "BASE_NAME=fxplugins",
-                                IS_64 ? "ARCH=x64" : "ARCH=x32",
-                                "CC=${mediaProperties.compiler}", "AR=${mediaProperties.ar}", "LINKER=${mediaProperties.linker}")
+                             IS_64 ? "ARCH=x64" : "ARCH=x32",
+                             "CC=${mediaProperties.compiler}", "AR=${mediaProperties.ar}", "LINKER=${mediaProperties.linker}")
 
                         if (t.name == "win") {
                             Map winEnv = new HashMap(WINDOWS_NATIVE_COMPILE_ENVIRONMENT)
@@ -2834,28 +2685,28 @@ project(":media") {
                 def commonCfgArgs = ["--enable-shared", "--disable-debug", "--disable-static", "--disable-yasm", "--disable-doc", "--disable-programs", "--disable-everything"]
                 def codecsCfgArgs = ["--enable-decoder=aac,mp3,mp3float,h264", "--enable-parser=aac,h264", "--enable-demuxer=aac,h264,mpegts,mpegtsraw"]
 
-                def copyLibAVStubs = { String fromDir, String toDir ->
+                def copyLibAVStubs = {String fromDir, String toDir ->
                     FileCollection config = files("config.h")
                     FileCollection libavcodec = files("avcodec.h", "avfft.h", "dxva2.h", "vaapi.h", "vda.h",
-                            "vdpau.h", "version.h", "xvmc.h", "old_codec_ids.h")
+                                                      "vdpau.h", "version.h", "xvmc.h", "old_codec_ids.h")
                     FileCollection libavdevice = files("avdevice.h", "version.h")
                     FileCollection libavfilter = files("avfiltergraph.h", "avfilter.h", "buffersink.h", "buffersrc.h", "version.h");
                     FileCollection libavformat = files("avformat.h", "avio.h", "version.h")
                     FileCollection libavresample = files("avresample.h", "version.h")
                     FileCollection libavutil = files("adler32.h", "blowfish.h", "error.h", "log.h", "pixfmt.h",
-                            "aes.h", "bswap.h", "eval.h", "lzo.h", "random_seed.h",
-                            "attributes.h", "buffer.h", "fifo.h", "macros.h", "rational.h",
-                            "audio_fifo.h", "channel_layout.h", "file.h", "mathematics.h", "samplefmt.h",
-                            "avassert.h", "common.h", "frame.h", "md5.h", "sha.h",
-                            "avconfig.h", "imgutils.h", "mem.h", "time.h", "avstring.h",
-                            "cpu_internal.h", "intfloat.h", "opt.h", "version.h", "avutil.h",
-                            "crc.h", "intreadwrite.h", "parseutils.h", "xtea.h", "base64.h",
-                            "dict.h", "lfg.h", "pixdesc.h", "intfloat_readwrite.h", "old_pix_fmts.h", "audioconvert.h",
-                            "cpu.h")
+                                                     "aes.h", "bswap.h", "eval.h", "lzo.h", "random_seed.h",
+                                                     "attributes.h", "buffer.h", "fifo.h", "macros.h", "rational.h",
+                                                     "audio_fifo.h", "channel_layout.h", "file.h", "mathematics.h", "samplefmt.h",
+                                                     "avassert.h", "common.h", "frame.h", "md5.h", "sha.h",
+                                                     "avconfig.h", "imgutils.h", "mem.h", "time.h", "avstring.h",
+                                                     "cpu_internal.h", "intfloat.h", "opt.h", "version.h", "avutil.h",
+                                                     "crc.h", "intreadwrite.h", "parseutils.h", "xtea.h", "base64.h",
+                                                     "dict.h", "lfg.h", "pixdesc.h", "intfloat_readwrite.h", "old_pix_fmts.h", "audioconvert.h",
+                                                     "cpu.h")
                     FileCollection libavutil_x86 = files("cpu.h") // Use cpu.h from x86 instead of libavutil root if exist
                     FileCollection libswscale = files("swscale.h", "version.h")
 
-                    def copyLibAVFiles = { FileCollection files, String fDir, String tDir ->
+                    def copyLibAVFiles = {FileCollection files, String fDir, String tDir ->
                         File dir = file(tDir)
                         dir.mkdirs()
 
@@ -2880,7 +2731,7 @@ project(":media") {
 
                     // Copy libs
                     FileTree libs = fileTree(dir: "${fromDir}", include: "**/*.so*")
-                    libs.each { File file ->
+                    libs.each {File file ->
                         copy {
                             from file
                             into "${toDir}/lib"
@@ -2894,8 +2745,8 @@ project(":media") {
                     doLast {
                         project.ext.libav = [:]
                         project.ext.libav.basedir = "${buildDir}/native/linux/libav"
-                        project.ext.libav.versions = ["9.14", "11.4", "12.1"]
-                        project.ext.libav.versionmap = ["9.14": "54", "11.4": "56", "12.1": "57"]
+                        project.ext.libav.versions = [ "9.14", "11.4", "12.1" ]
+                        project.ext.libav.versionmap = [ "9.14" : "54", "11.4" : "56", "12.1" : "57" ]
 
                         libav.versions.each { version ->
                             def libavDir = "${libav.basedir}/libav-${version}"
@@ -2955,8 +2806,8 @@ project(":media") {
                     doLast {
                         project.ext.libav = [:]
                         project.ext.libav.basedir = "${buildDir}/native/linux/libavffmpeg"
-                        project.ext.libav.versions = ["11.4"]
-                        project.ext.libav.versionmap = ["11.4": "56"]
+                        project.ext.libav.versions = [ "11.4" ]
+                        project.ext.libav.versionmap = [ "11.4" : "56" ]
 
                         libav.versions.each { version ->
                             def libavDir = "${libav.basedir}/libav-${version}"
@@ -2980,7 +2831,7 @@ project(":media") {
                                 if (!cfgFile.exists()) {
                                     // Patch *.v files, so we have *_FFMPEG_$MAJOR instead of *_$MAJOR, otherwise library will not be loaded
                                     FileTree vfiles = fileTree(dir: "${libavDir}", include: "**/*.v")
-                                    vfiles.each { File file ->
+                                    vfiles.each {File file ->
                                         String data = file.getText("UTF-8")
                                         data = data.replace("_\$MAJOR", "_FFMPEG_\$MAJOR")
                                         file.write(data, "UTF-8")
@@ -3014,7 +2865,7 @@ project(":media") {
 
                             // Special case to copy *-ffmpeg.so to *.so
                             FileTree libs = fileTree(dir: "${fromDir}", include: "**/*-ffmpeg.so")
-                            libs.each { File file ->
+                            libs.each {File file ->
                                 copy {
                                     from file
                                     into "${toDir}/lib"
@@ -3033,8 +2884,8 @@ project(":media") {
                     doLast {
                         project.ext.libav = [:]
                         project.ext.libav.basedir = "${buildDir}/native/linux/ffmpeg"
-                        project.ext.libav.versions = ["3.3.3"]
-                        project.ext.libav.versionmap = ["3.3.3": "57"]
+                        project.ext.libav.versions = [ "3.3.3" ]
+                        project.ext.libav.versionmap = [ "3.3.3" : "57" ]
 
                         libav.versions.each { version ->
                             def libavDir = "${libav.basedir}/ffmpeg-${version}"
@@ -3086,31 +2937,31 @@ project(":media") {
                     }
                 }
 
-                def buildAVPlugin = task("buildAVPlugin", dependsOn: [buildPlugins, buildLibAVStubs, buildLibAVFFmpegStubs, buildFFmpegStubs]) {
+                def buildAVPlugin = task( "buildAVPlugin", dependsOn: [buildPlugins, buildLibAVStubs, buildLibAVFFmpegStubs, buildFFmpegStubs]) {
                     enabled = IS_COMPILE_MEDIA
 
                     doLast {
                         if (IS_BUILD_LIBAV_STUBS) {
                             project.ext.libav = [:]
                             project.ext.libav.basedir = "${buildDir}/native/linux/libav/libav"
-                            project.ext.libav.versions = ["53", "54", "55", "56", "57"]
+                            project.ext.libav.versions = [ "53", "54", "55", "56", "57" ]
                             project.ext.libav.libavffmpeg = [:]
                             project.ext.libav.libavffmpeg.basedir = "${buildDir}/native/linux/libavffmpeg/libav"
-                            project.ext.libav.libavffmpeg.versions = ["56"]
+                            project.ext.libav.libavffmpeg.versions = [ "56" ]
                             project.ext.libav.ffmpeg = [:]
                             project.ext.libav.ffmpeg.basedir = "${buildDir}/native/linux/ffmpeg/ffmpeg"
-                            project.ext.libav.ffmpeg.versions = ["57"]
+                            project.ext.libav.ffmpeg.versions = [ "57" ]
 
                             project.ext.libav.versions.each { version ->
                                 def libavDir = "${project.ext.libav.basedir}-${version}"
                                 File dir = file(libavDir)
                                 if (dir.exists()) {
                                     exec {
-                                        commandLine("make", "${makeJobsFlag}", "-C", "${nativeSrcDir}/gstreamer/projects/linux/avplugin")
+                                        commandLine ("make", "${makeJobsFlag}", "-C", "${nativeSrcDir}/gstreamer/projects/linux/avplugin")
                                         args("CC=${mediaProperties.compiler}", "LINKER=${mediaProperties.linker}",
-                                                "OUTPUT_DIR=${nativeOutputDir}", "BUILD_TYPE=${buildType}",
-                                                "BASE_NAME=avplugin", "VERSION=${version}", "LIBAV_DIR=${libavDir}",
-                                                "SUFFIX=", IS_64 ? "ARCH=x64" : "ARCH=x32")
+                                             "OUTPUT_DIR=${nativeOutputDir}", "BUILD_TYPE=${buildType}",
+                                             "BASE_NAME=avplugin", "VERSION=${version}", "LIBAV_DIR=${libavDir}",
+                                             "SUFFIX=", IS_64 ? "ARCH=x64" : "ARCH=x32")
                                     }
                                 }
                             }
@@ -3120,11 +2971,11 @@ project(":media") {
                                 File dir = file(libavDir)
                                 if (dir.exists()) {
                                     exec {
-                                        commandLine("make", "${makeJobsFlag}", "-C", "${nativeSrcDir}/gstreamer/projects/linux/avplugin")
+                                        commandLine ("make", "${makeJobsFlag}", "-C", "${nativeSrcDir}/gstreamer/projects/linux/avplugin")
                                         args("CC=${mediaProperties.compiler}", "LINKER=${mediaProperties.linker}",
-                                                "OUTPUT_DIR=${nativeOutputDir}", "BUILD_TYPE=${buildType}",
-                                                "BASE_NAME=avplugin", "VERSION=${version}", "LIBAV_DIR=${libavDir}",
-                                                "SUFFIX=-ffmpeg", IS_64 ? "ARCH=x64" : "ARCH=x32")
+                                             "OUTPUT_DIR=${nativeOutputDir}", "BUILD_TYPE=${buildType}",
+                                             "BASE_NAME=avplugin", "VERSION=${version}", "LIBAV_DIR=${libavDir}",
+                                             "SUFFIX=-ffmpeg", IS_64 ? "ARCH=x64" : "ARCH=x32")
                                     }
                                 }
                             }
@@ -3134,21 +2985,21 @@ project(":media") {
                                 File dir = file(libavDir)
                                 if (dir.exists()) {
                                     exec {
-                                        commandLine("make", "${makeJobsFlag}", "-C", "${nativeSrcDir}/gstreamer/projects/linux/avplugin")
+                                        commandLine ("make", "${makeJobsFlag}", "-C", "${nativeSrcDir}/gstreamer/projects/linux/avplugin")
                                         args("CC=${mediaProperties.compiler}", "LINKER=${mediaProperties.linker}",
-                                                "OUTPUT_DIR=${nativeOutputDir}", "BUILD_TYPE=${buildType}",
-                                                "BASE_NAME=avplugin", "VERSION=${version}", "LIBAV_DIR=${libavDir}",
-                                                "SUFFIX=-ffmpeg", IS_64 ? "ARCH=x64" : "ARCH=x32")
+                                             "OUTPUT_DIR=${nativeOutputDir}", "BUILD_TYPE=${buildType}",
+                                             "BASE_NAME=avplugin", "VERSION=${version}", "LIBAV_DIR=${libavDir}",
+                                             "SUFFIX=-ffmpeg", IS_64 ? "ARCH=x64" : "ARCH=x32")
                                     }
                                 }
                             }
                         } else {
                             // Building fxavcodec plugin (libav plugin)
                             exec {
-                                commandLine("make", "${makeJobsFlag}", "-C", "${nativeSrcDir}/gstreamer/projects/linux/avplugin")
+                                commandLine ("make", "${makeJobsFlag}", "-C", "${nativeSrcDir}/gstreamer/projects/linux/avplugin")
                                 args("CC=${mediaProperties.compiler}", "LINKER=${mediaProperties.linker}",
-                                        "OUTPUT_DIR=${nativeOutputDir}", "BUILD_TYPE=${buildType}",
-                                        "BASE_NAME=avplugin", IS_64 ? "ARCH=x64" : "ARCH=x32")
+                                     "OUTPUT_DIR=${nativeOutputDir}", "BUILD_TYPE=${buildType}",
+                                     "BASE_NAME=avplugin", IS_64 ? "ARCH=x64" : "ARCH=x32")
                             }
                         }
                     }
@@ -3163,28 +3014,28 @@ project(":media") {
                         mkdir rcOutputDir
                         exec {
                             environment(WINDOWS_NATIVE_COMPILE_ENVIRONMENT)
-                            commandLine(WIN.media.rcCompiler)
+                            commandLine (WIN.media.rcCompiler)
                             args(WIN.media.glibRcFlags)
                             args("/Fo${rcOutputDir}/${WIN.media.glibRcFile}", WIN.media.rcSource)
                         }
 
                         exec {
                             environment(WINDOWS_NATIVE_COMPILE_ENVIRONMENT)
-                            commandLine(WIN.media.rcCompiler)
+                            commandLine (WIN.media.rcCompiler)
                             args(WIN.media.gstreamerRcFlags)
                             args("/Fo${rcOutputDir}/${WIN.media.gstreamerRcFile}", WIN.media.rcSource)
                         }
 
                         exec {
                             environment(WINDOWS_NATIVE_COMPILE_ENVIRONMENT)
-                            commandLine(WIN.media.rcCompiler)
+                            commandLine (WIN.media.rcCompiler)
                             args(WIN.media.fxpluginsRcFlags)
                             args("/Fo${rcOutputDir}/${WIN.media.fxpluginsRcFile}", WIN.media.rcSource)
                         }
 
                         exec {
                             environment(WINDOWS_NATIVE_COMPILE_ENVIRONMENT)
-                            commandLine(WIN.media.rcCompiler)
+                            commandLine (WIN.media.rcCompiler)
                             args(WIN.media.jfxmediaRcFlags)
                             args("/Fo${rcOutputDir}/${WIN.media.jfxmediaRcFile}", WIN.media.rcSource)
                         }
@@ -3196,30 +3047,29 @@ project(":media") {
                     doLast {
                         exec {
                             environment(WINDOWS_NATIVE_COMPILE_ENVIRONMENT)
-                            commandLine("make", "${makeJobsFlag}", "-C", "${nativeSrcDir}/gstreamer/projects/${projectDir}/glib-lite")
+                            commandLine ("make", "${makeJobsFlag}", "-C", "${nativeSrcDir}/gstreamer/projects/${projectDir}/glib-lite")
                             args("OUTPUT_DIR=${nativeOutputDir}", "BUILD_TYPE=${buildType}", "BASE_NAME=glib-lite",
-                                    IS_64 ? "ARCH=x64" : "ARCH=x32", "RESOURCE=${nativeOutputDir}/${buildType}/${WIN.media.glibRcFile}",
-                                    "CC=${mediaProperties.compiler}", "AR=${mediaProperties.ar}", "LINKER=${mediaProperties.linker}")
+                                 IS_64 ? "ARCH=x64" : "ARCH=x32", "RESOURCE=${nativeOutputDir}/${buildType}/${WIN.media.glibRcFile}",
+                                 "CC=${mediaProperties.compiler}", "AR=${mediaProperties.ar}", "LINKER=${mediaProperties.linker}")
                         }
                     }
                 }
                 buildGStreamer.dependsOn buildGlib
 
-            }
-            else if (t.name == "mac") {
+            } else if (t.name == "mac") {
                 def buildGlib = task("build${t.capital}Glib") {
                     enabled = IS_COMPILE_MEDIA
                     doLast {
                         exec {
-                            commandLine("make", "${makeJobsFlag}", "-C", "${nativeSrcDir}/gstreamer/projects/${projectDir}/libffi")
+                            commandLine ("make", "${makeJobsFlag}", "-C", "${nativeSrcDir}/gstreamer/projects/${projectDir}/libffi")
                             args("OUTPUT_DIR=${nativeOutputDir}", "BUILD_TYPE=${buildType}", "BASE_NAME=ffi")
-                            args("CC=${mediaProperties.compiler}", "LINKER=${mediaProperties.linker}", "AR=${mediaProperties.ar}")
+                            args ("CC=${mediaProperties.compiler}", "LINKER=${mediaProperties.linker}", "AR=${mediaProperties.ar}")
                         }
 
                         exec {
-                            commandLine("make", "${makeJobsFlag}", "-C", "${nativeSrcDir}/gstreamer/projects/${projectDir}/glib-lite")
+                            commandLine ("make", "${makeJobsFlag}", "-C", "${nativeSrcDir}/gstreamer/projects/${projectDir}/glib-lite")
                             args("OUTPUT_DIR=${nativeOutputDir}", "BUILD_TYPE=${buildType}", "BASE_NAME=glib-lite")
-                            args("CC=${mediaProperties.compiler}", "LINKER=${mediaProperties.linker}")
+                            args ("CC=${mediaProperties.compiler}", "LINKER=${mediaProperties.linker}")
                         }
                     }
                 }
@@ -3239,7 +3089,7 @@ project(":media") {
         }
     }
 
-    addMavenPublication(project, ['graphics'])
+    addMavenPublication(project, [ 'graphics' ])
 
 }
 
@@ -3261,42 +3111,15 @@ project(":web") {
     project.ext.moduleSourcePath = defaultModuleSourcePath
     project.ext.moduleSourcePathShim = defaultModuleSourcePathShim
 
-    commonModuleSetup(project, ['base', 'graphics', 'controls', 'media', 'web'])
+    commonModuleSetup(project, [ 'base', 'graphics', 'controls', 'media', 'web' ])
 
     dependencies {
-        ext.lwjglVersion = "3.2.1-SNAPSHOT"
-        switch (org.gradle.internal.os.OperatingSystem.current()) {
-            case org.gradle.internal.os.OperatingSystem.WINDOWS:
-                ext.lwjglNatives = "natives-windows"
-                break
-            case org.gradle.internal.os.OperatingSystem.LINUX:
-                ext.lwjglNatives = "natives-linux"
-                break
-            case org.gradle.internal.os.OperatingSystem.MAC_OS:
-                ext.lwjglNatives = "natives-macos"
-                break
-        }
-        ["", "-jemalloc", "-opengl"].each {
-            compile "org.lwjgl:lwjgl$it:$lwjglVersion"
-            runtime "org.lwjgl:lwjgl$it:$lwjglVersion:$lwjglNatives"
-        }
-    }
-
-    repositories {
-        maven { setUrl("https://oss.sonatype.org/content/repositories/snapshots/") }
-    }
-
-    compileJava {
-        doFirst {
-            options.compilerArgs += "--module-path=$classpath.asPath"
-            classpath = files()
-        }
     }
 
     compileJava.dependsOn updateCacheIfNeeded
 
     task webArchiveJar(type: Jar) {
-        from(project.file("$projectDir/src/test/resources/test/html")) {
+        from (project.file("$projectDir/src/test/resources/test/html")) {
             include "**/archive-*.*"
         }
         archiveName = "webArchiveJar.jar"
@@ -3313,8 +3136,8 @@ project(":web") {
             // generate the native headers during compile
             // only needed if we are doing the native compile
             options.compilerArgs.addAll([
-                    '-h', "${project.buildDir}/gensrc/headers"
-            ])
+                '-h', "${project.buildDir}/gensrc/headers"
+                ])
         }
     }
 
@@ -3355,7 +3178,7 @@ project(":web") {
         def targetProperties = project.rootProject.ext[t.upper]
         def webkitProperties = targetProperties.webkit
         def classifier = (t.name != "linux" && t.name != "win") ? t.name :
-                IS_64 ? "${t.name}-amd64" : "${t.name}-i586"
+                          IS_64 ? "${t.name}-amd64" : "${t.name}-i586"
 
         def webkitOutputDir = cygpath("$buildDir/${t.name}")
         def webkitConfig = IS_DEBUG_NATIVE ? "Debug" : "Release"
@@ -3365,13 +3188,13 @@ project(":web") {
 
         def compileNativeTask = task("compileNative${t.capital}", dependsOn: [compileJava]) {
             println "Building Webkit configuration /$webkitConfig/ into $webkitOutputDir"
-            enabled = (IS_COMPILE_WEBKIT)
+            enabled =  (IS_COMPILE_WEBKIT)
 
             doLast {
                 exec {
                     workingDir("$webkitOutputDir")
                     commandLine("perl", "$projectDir/src/main/native/Tools/Scripts/set-webkit-configuration", "--$webkitConfig")
-                    environment(["WEBKIT_OUTPUTDIR": webkitOutputDir])
+                    environment(["WEBKIT_OUTPUTDIR" : webkitOutputDir])
                 }
 
                 exec {
@@ -3403,7 +3226,7 @@ project(":web") {
 
                     if (IS_COMPILE_PARFAIT) {
                         environment([
-                                "COMPILE_PARFAIT": "true"
+                            "COMPILE_PARFAIT" : "true"
                         ])
                         environment "PATH", System.env.PARFAIT_PATH + File.pathSeparator + environment.PATH
                         cmakeArgs = "-DCMAKE_C_COMPILER=parfait-gcc -DCMAKE_CXX_COMPILER=parfait-g++"
@@ -3414,9 +3237,9 @@ project(":web") {
                     }
 
                     environment([
-                            "JAVA_HOME"              : JDK_HOME,
-                            "WEBKIT_OUTPUTDIR"       : webkitOutputDir,
-                            "PYTHONDONTWRITEBYTECODE": "1",
+                        "JAVA_HOME"       : JDK_HOME,
+                        "WEBKIT_OUTPUTDIR" : webkitOutputDir,
+                        "PYTHONDONTWRITEBYTECODE" : "1",
                     ])
 
                     def targetCpuBitDepthSwitch = ""
@@ -3427,8 +3250,8 @@ project(":web") {
                     }
                     cmakeArgs += " -DJAVAFX_RELEASE_VERSION=${jfxReleaseMajorVersion}"
                     commandLine("perl", "$projectDir/src/main/native/Tools/Scripts/build-webkit",
-                            "--java", "--icu-unicode", targetCpuBitDepthSwitch,
-                            "--cmakeargs=${cmakeArgs}")
+                        "--java", "--icu-unicode", targetCpuBitDepthSwitch,
+                        "--cmakeargs=${cmakeArgs}")
                 }
             }
         }
@@ -3436,15 +3259,15 @@ project(":web") {
         // Cmake places Windows DLL in bin directory
         def dllDir = IS_WINDOWS ? "bin" : "lib"
         def copyDumpTreeNativeTask = task("copyDumpTreeNative${t.capital}", type: Copy,
-                dependsOn: [compileNativeTask]) {
+                dependsOn: [ compileNativeTask]) {
             def library = rootProject.ext[t.upper].library
             from "$webkitOutputDir/$webkitConfig/$dllDir/${library('DumpRenderTreeJava')}"
             into "$buildDir/test/${t.name}"
         }
 
         def copyNativeTask = task("copyNative${t.capital}", type: Copy,
-                dependsOn: [compileNativeTask, copyDumpTreeNativeTask]) {
-            enabled = (IS_COMPILE_WEBKIT)
+                dependsOn: [compileNativeTask, , copyDumpTreeNativeTask]) {
+            enabled =  (IS_COMPILE_WEBKIT)
             def library = rootProject.ext[t.upper].library
             from "$webkitOutputDir/$webkitConfig/$dllDir/${library('jfxwebkit')}"
             into "$buildDir/libs/${t.name}"
@@ -3468,9 +3291,9 @@ project(":web") {
             classpath = configurations.compile
             source = project.sourceSets.main.java.srcDirs
             options.compilerArgs.addAll([
-                    '-implicit:none',
-                    '--module-source-path', defaultModuleSourcePath
-            ])
+                '-implicit:none',
+                '--module-source-path', defaultModuleSourcePath
+                ])
         }
 
         compileJavaDOMBinding.dependsOn compileJavaDOMBindingTask
@@ -3494,7 +3317,7 @@ project(":web") {
         assemble.dependsOn compileJavaDOMBinding, drtJar
     }
 
-    addMavenPublication(project, ['controls', 'media'])
+    addMavenPublication(project, [ 'controls', 'media' ])
 
 }
 
@@ -3530,13 +3353,13 @@ project(":systemTests") {
         testCompile project(":swing").sourceSets.test.output
     }
 
-    def dependentProjects = ['base', 'graphics', 'controls', 'media', 'web', 'swing', 'fxml']
+    def dependentProjects = [ 'base', 'graphics', 'controls', 'media', 'web', 'swing', 'fxml' ]
     commonModuleSetup(project, dependentProjects)
 
     File testJavaPolicyFile = new File(rootProject.buildDir, TESTJAVAPOLICYFILE);
-    File testRunArgsFile = new File(rootProject.buildDir, TESTRUNARGSFILE);
+    File testRunArgsFile = new File(rootProject.buildDir,TESTRUNARGSFILE);
 
-    File stRunArgsFile = new File(project.buildDir, "st.run.args");
+    File stRunArgsFile = new File(project.buildDir,"st.run.args");
 
     def sts = task("systemTestSetup") {
         outputs.file(stRunArgsFile)
@@ -3552,16 +3375,16 @@ project(":systemTests") {
             //First add in all of the patch-module args we use for the
             //normal unit tests, copied from test.run.args
             testRunArgsFile.eachLine { str ->
-                stRunArgsFile << "${str}\n"
+                stRunArgsFile <<  "${str}\n"
             }
 
             // Now add in the working classpath elements (junit, test classes...)
-            stRunArgsFile << "-cp \"\\\n"
+            stRunArgsFile <<  "-cp \"\\\n"
             test.classpath.each() { elem ->
                 def e = cygpath("${elem}")
-                stRunArgsFile << "  ${e}${File.pathSeparator}\\\n"
+                stRunArgsFile <<  "  ${e}${File.pathSeparator}\\\n"
             }
-            stRunArgsFile << "\"\n"
+            stRunArgsFile <<  "\"\n"
         }
     }
 
@@ -3591,10 +3414,10 @@ project(":systemTests") {
 
         manifest {
             attributes(
-                    "Main-Class": "com.javafx.main.Main",
-                    "JavaFX-Version": "2.2",
-                    "JavaFX-Application-Class": "testapp.HelloWorld",
-                    "JavaFX-Class-Path": "jar2.jar"
+                "Main-Class" : "com.javafx.main.Main",
+                "JavaFX-Version" : "2.2",
+                "JavaFX-Application-Class" : "testapp.HelloWorld",
+                "JavaFX-Class-Path" : "jar2.jar"
             )
         }
     }
@@ -3616,7 +3439,7 @@ project(":systemTests") {
     }
     test.dependsOn(createTestApps);
 
-    def modtestapps = ["testapp2", "testapp3", "testapp4", "testapp5", "testapp6"]
+    def modtestapps = [ "testapp2", "testapp3", "testapp4", "testapp5", "testapp6"  ]
     modtestapps.each { testapp ->
         def testappCapital = testapp.capitalize()
         def copyTestAppTask = task("copy${testappCapital}", type: Copy) {
@@ -3633,9 +3456,9 @@ project(":systemTests") {
         def testappResourceTasks = project.getTasksByName("process${testappCapital}Resources", true);
         testappCompileTasks.each { appCompileTask ->
             appCompileTask.options.compilerArgs.addAll([
-                    '-implicit:none',
-                    '--module-source-path', testAppSourceDirs.join(File.pathSeparator),
-            ])
+                '-implicit:none',
+                '--module-source-path', testAppSourceDirs.join(File.pathSeparator),
+                ] )
             if (project.hasProperty('testModulePathArgs')) {
                 appCompileTask.options.compilerArgs.addAll(testModulePathArgs)
             }
@@ -3745,9 +3568,9 @@ allprojects {
             (project.hasProperty('buildModule') && project.buildModule)) {
         project.compileJava {
             options.compilerArgs.addAll([
-                    '-implicit:none',
-                    '--module-source-path', project.moduleSourcePath
-            ])
+                '-implicit:none',
+                '--module-source-path', project.moduleSourcePath
+                ])
         }
         // no jars needed for modules
         project.jar.enabled = false
@@ -3766,9 +3589,9 @@ allprojects {
 
         project.compileShimsJava {
             options.compilerArgs.addAll([
-                    '-implicit:none',
-                    '--module-source-path', project.moduleSourcePathShim
-            ])
+                '-implicit:none',
+                '--module-source-path', project.moduleSourcePathShim
+                ])
         }
         project.compileShimsJava.dependsOn(project.compileJava)
 
@@ -3788,7 +3611,7 @@ allprojects {
         // and redirect the resources into the module
         project.processShimsResources.destinationDir = project.moduleShimsDir
 
-        compileTestJava.dependsOn(copyGeneratedShimsTask)
+       compileTestJava.dependsOn(copyGeneratedShimsTask)
     }
 
     if (project.hasProperty('modulePathArgs')) {
@@ -3866,7 +3689,7 @@ task cleanAll() {
 
 task createMSPfile() {
     group = "Build"
-    File mspFile = new File(rootProject.buildDir, MODULESOURCEPATH)
+    File mspFile = new File(rootProject.buildDir,MODULESOURCEPATH)
     outputs.file(mspFile)
 
     doLast {
@@ -3920,8 +3743,8 @@ task javadoc(type: Javadoc, dependsOn: createMSPfile) {
     options.addBooleanOption("use").setValue(true);
 
     options.setOptionFiles([
-            new File(rootProject.buildDir, MODULESOURCEPATH)
-    ]);
+        new File(rootProject.buildDir,MODULESOURCEPATH)
+        ]);
 
     doLast {
         projectsToDocument.each { p ->
@@ -3929,7 +3752,7 @@ task javadoc(type: Javadoc, dependsOn: createMSPfile) {
             copy {
                 from("$p.projectDir/src/main/docs") {
                     include "**/*.html"
-                    filter { line ->
+                    filter { line->
                         line = line.replace("@FXVERSION@", RELEASE_VERSION)
                     }
                 }
@@ -3942,7 +3765,7 @@ task javadoc(type: Javadoc, dependsOn: createMSPfile) {
         }
     }
 
-    dependsOn(projectsToDocument.collect { project -> project.getTasksByName("classes", true) });
+    dependsOn(projectsToDocument.collect { project -> project.getTasksByName("classes", true)});
 }
 
 task sdk() {
@@ -4016,7 +3839,7 @@ task zips() {
 }
 
 task all() {
-    dependsOn(sdk, publicExports, apps, perf, zips)
+    dependsOn(sdk,publicExports,apps,perf,zips)
 }
 
 
@@ -4046,12 +3869,12 @@ compileTargets { t ->
         include("**/javafx/embed/swt/**")
 
         dependsOn(
-                project(":swt").compileJava,
-                project(":swt").processResources,
-                // note: assemble and classes are not enough for DidWork
-                project(":swt").classes,
-                // classes is needed for a jar copy
-        )
+            project(":swt").compileJava,
+            project(":swt").processResources,
+            // note: assemble and classes are not enough for DidWork
+            project(":swt").classes,
+            // classes is needed for a jar copy
+            )
     }
 
     // FIXME: do we really need the index task for this modular jar?
@@ -4060,7 +3883,7 @@ compileTargets { t ->
         dependsOn(javafxSwtTask)
 
         doLast() {
-            ant.jar(update: true, index: true, destfile: javafxSwtTask.archiveName)
+            ant.jar (update: true, index: true, destfile: javafxSwtTask.archiveName)
         }
     }
 
@@ -4086,9 +3909,9 @@ project(":apps") {
 
     // Copy Lucene libraries into the Ensemble8/lib directory
     File ensembleLibDir = rootProject.file("apps/samples/Ensemble8/lib");
-    def libNames = ["lucene-core-${luceneVersion}.jar",
-                    "lucene-grouping-${luceneVersion}.jar",
-                    "lucene-queryparser-${luceneVersion}.jar"]
+    def libNames = [ "lucene-core-${luceneVersion}.jar",
+                     "lucene-grouping-${luceneVersion}.jar",
+                     "lucene-queryparser-${luceneVersion}.jar" ]
 
 
     task getLucene(type: Copy) {
@@ -4122,9 +3945,9 @@ project(":apps") {
             dependsOn(sdk, getLucene)
             doLast() {
                 ant(t.name,
-                        projectDir.path,
-                        "appsJar",
-                        params);
+                      projectDir.path,
+                      "appsJar",
+                      params);
             }
         }
         rootProject.appsjar.dependsOn(appsJar)
@@ -4132,9 +3955,9 @@ project(":apps") {
         def appsClean = project.task("clean${t.capital}") {
             doLast() {
                 ant(t.name,
-                        project.projectDir.path,
-                        "clean",
-                        params);
+                      project.projectDir.path,
+                      "clean",
+                      params);
                 delete(ensembleLibDir);
             }
         }
@@ -4169,13 +3992,13 @@ compileTargets { t ->
         def jmodsBundleName = "javafx-jmods-${RELEASE_VERSION}"
         def jmodsArtifactsDir = "${artifactsDir}/${jmodsBundleName}"
 
-        def publicExportsTask = task("publicExportsStandalone${t.capital}") {
+        def publicExportsTask = task ("publicExportsStandalone${t.capital}") {
             group = "Basic"
             description = "Creates the disk layout for sdk, jmods, and docs"
         }
         publicExports.dependsOn(publicExportsTask)
 
-        def copyArtifactsSdkTask = task("copyArtifactsSdk$t.capital", type: Copy, dependsOn: [sdk, jmods, apps, javadoc]) {
+        def copyArtifactsSdkTask = task("copyArtifactsSdk$t.capital", type: Copy, dependsOn: [sdk,jmods,apps,javadoc]) {
             from sdkDir
             into sdkArtifactsDir
         }
@@ -4207,7 +4030,7 @@ compileTargets { t ->
         }
         publicExportsTask.dependsOn(copyArtifactsJmodsTask)
 
-        def zipsTask = task("zipsStandalone${t.capital}") {
+        def zipsTask = task ("zipsStandalone${t.capital}") {
             group = "Basic"
             description = "Creates the public zip bundles"
         }
@@ -4293,7 +4116,7 @@ compileTargets { t ->
         ArrayList outputNames = new ArrayList()
         dependencyRoots.each { root ->
             FileTree ft = fileTree(root).include('**/*.extra')
-            ft.each() { e ->
+            ft.each() { e->
                 inputs.file(e)
 
                 String usename = e.path
@@ -4302,15 +4125,15 @@ compileTargets { t ->
                 if (filePath.startsWith(folderPath)) {
                     usename = filePath.substring(folderPath.length() + 1);
                 }
-                if (!outputNames.contains(usename)) {
+                if (! outputNames.contains(usename) ) {
                     outputNames.add(usename)
                 }
             }
         }
 
-        outputNames.each() { e ->
-            File f = new File(modulesSrcDir, e)
-            outputs.file(f)
+        outputNames.each() { e->
+                File f = new File(modulesSrcDir, e)
+                outputs.file(f)
         }
 
         def outputPolicyDir = "${modulesConfDir}/java.base/security"
@@ -4330,7 +4153,7 @@ compileTargets { t ->
 
             dependencyRoots.each { root ->
                 FileTree ft = fileTree(root).include('**/*.extra')
-                ft.each() { e ->
+                ft.each() { e->
                     String usename = e.path
                     String filePath = e.getAbsolutePath()
                     String folderPath = root.getAbsolutePath()
@@ -4354,16 +4177,16 @@ compileTargets { t ->
                                 lines << line
                             }
                         }
-                        extras.put(usename, lines)
+                        extras.put(usename,lines)
                     }
                 }
             }
-            extras.keySet().each() { e ->
+            extras.keySet().each() { e->
                 File f = new File(modulesSrcDir, e)
                 f.getParentFile().mkdirs()
                 f.delete()
 
-                extras.get(e).unique().each() { l ->
+                extras.get(e).unique().each() { l->
                     f << l
                     f << "\n"
                 }
@@ -4439,7 +4262,7 @@ compileTargets { t ->
             if (copySources) {
                 from("${project.projectDir}/src/main/docs") {
                     include "**/*.html"
-                    filter { line ->
+                    filter { line->
                         line = line.replace("@FXVERSION@", RELEASE_VERSION)
                     }
                 }
@@ -4474,12 +4297,12 @@ compileTargets { t ->
         }
 
         buildModulesTask.dependsOn(
-                copyClassFilesTask,
-                copyLibFilesTask,
-                copySourceFilesTask,
-                copyDocFiles,
-                copyBuildPropertiesTask,
-                copyLegalTask)
+            copyClassFilesTask,
+            copyLibFilesTask,
+            copySourceFilesTask,
+            copyDocFiles,
+            copyBuildPropertiesTask,
+            copyLegalTask)
     }
 
     // ============================================================
@@ -4487,7 +4310,7 @@ compileTargets { t ->
     def standaloneSdkDirName = "${platformPrefix}sdk"
     def standaloneSdkDir = "${rootProject.buildDir}/${standaloneSdkDirName}"
     def standaloneLibDir = "${standaloneSdkDir}/lib"
-    def libDest = targetProperties.libDest
+    def libDest=targetProperties.libDest
     def standaloneNativeDir = "${standaloneSdkDir}/${libDest}"
     def standaloneLegalDir = "${standaloneSdkDir}/legal"
     def standaloneSrcZipName = "src.zip"
@@ -4529,7 +4352,7 @@ compileTargets { t ->
         }
 
         // Copy legal files
-        def licenseFiles = ["ADDITIONAL_LICENSE_INFO", "ASSEMBLY_EXCEPTION", "LICENSE"]
+        def licenseFiles = [ "ADDITIONAL_LICENSE_INFO", "ASSEMBLY_EXCEPTION", "LICENSE" ]
         def srcLegalDir = "${project.projectDir}/src/main/legal"
         def dstLegalDir = "${standaloneLegalDir}/${moduleName}"
         def copyLegalTask = project.task("copyLegalStandalone$t.capital", type: Copy, dependsOn: copyLibFilesTask) {
@@ -4548,10 +4371,10 @@ compileTargets { t ->
         }
 
         buildModulesTask.dependsOn(
-                modularJarTask,
-                copyNativeFilesTask,
-                copyLibFilesTask,
-                copyLegalTask)
+            modularJarTask,
+            copyNativeFilesTask,
+            copyLibFilesTask,
+            copyLegalTask)
     }
 
     // Zip module sources for standalone SDK
@@ -4576,13 +4399,13 @@ compileTargets { t ->
     def publicationDirName = "${platformPrefix}publications"
     def publicationDir = "${rootProject.buildDir}/${publicationDirName}"
 
-    moduleProjList.each { project ->
+    moduleProjList.each { project -> 
         // Create publications to be uploaded 
 
         def moduleName = project.ext.moduleName
         def buildDir = project.buildDir
 
-        def dstModularJarDir = "${publicationDir}"
+        def dstModularJarDir="${publicationDir}"
         def srcClassesDir = "${buildDir}/${platformPrefix}module-classes"
         def srcLibsDir = "${buildDir}/${platformPrefix}module-lib"
 
@@ -4592,7 +4415,7 @@ compileTargets { t ->
             archiveName = modularEmptyPublicationJarName
             manifest {
                 attributes(
-                        'Automatic-Module-Name': "${moduleName}Empty"
+                    'Automatic-Module-Name':"${moduleName}Empty"
                 )
             }
         }
@@ -4615,14 +4438,14 @@ compileTargets { t ->
         outputs.file(runArgsFile);
         inputs.file(EXTRAADDEXPORTS);
         doLast() {
-            List<String> modpath = []
-            List<String> modnames = []
+            List<String>modpath = []
+            List<String>modnames = []
 
             moduleProjList.each { project ->
                 def moduleName = project.ext.moduleName
                 def dstModuleDir = cygpath("${modulesDir}/${moduleName}")
                 if (HAS_JAVAFX_MODULES) {
-                    modpath << "${moduleName}=${dstModuleDir}"
+                    modpath <<  "${moduleName}=${dstModuleDir}"
                 } else {
                     modnames << moduleName
                 }
@@ -4637,7 +4460,7 @@ compileTargets { t ->
                     compileArgsFile << EXTRA_ADDEXPORTS_STRING
                 }
             } else {
-                modpath = [cygpath("${standaloneLibDir}")]
+                modpath = [ cygpath("${standaloneLibDir}") ]
                 writeRunArgsFile(runArgsFile, null, modpath, modnames)
                 writeRunArgsFile(compileArgsFile, null, modpath, modnames)
             }
@@ -4654,97 +4477,97 @@ compileTargets { t ->
             dependsOn(project.assemble)
             def buildDir = project.buildDir
             def sourceBuildDirs = [
-                    "${buildDir}/classes/java/main/${project.moduleName}",
+                "${buildDir}/classes/java/main/${project.moduleName}",
             ]
 
             def moduleClassesDir = "$buildDir/${platformPrefix}module-classes"
-            includeEmptyDirs = false
-            sourceBuildDirs.each { d ->
-                from d
-            }
-            into moduleClassesDir
+                includeEmptyDirs = false
+                sourceBuildDirs.each { d ->
+                    from d
+                }
+                into moduleClassesDir
 
-            // Exclude obsolete, experimental, or non-shipping code
-            exclude("version.rc")
-            exclude("com/sun/glass/ui/swt")
-            exclude("com/sun/javafx/tools/ant")
-            exclude("com/javafx/main")
-            exclude("com/sun/javafx/webkit/drt")
-            if (!IS_INCLUDE_NULL3D) {
-                exclude("com/sun/prism/null3d")
-            }
-            if (!IS_INCLUDE_ES2) {
-                exclude("com/sun/prism/es2",
-                        "com/sun/scenario/effect/impl/es2")
-            }
+                // Exclude obsolete, experimental, or non-shipping code
+                exclude("version.rc")
+                exclude("com/sun/glass/ui/swt")
+                exclude("com/sun/javafx/tools/ant")
+                exclude("com/javafx/main")
+                exclude("com/sun/javafx/webkit/drt")
+                if (!IS_INCLUDE_NULL3D) {
+                    exclude ("com/sun/prism/null3d")
+                }
+                if (!IS_INCLUDE_ES2) {
+                       exclude("com/sun/prism/es2",
+                               "com/sun/scenario/effect/impl/es2")
+                }
 
-            // Exclude platform-specific classes for other platforms
+                // Exclude platform-specific classes for other platforms
 
-            if (!isMac) {
-                exclude("com/sun/media/jfxmediaimpl/platform/osx",
-                        "com/sun/prism/es2/MacGL*",
-                        "com/sun/glass/events/mac",
-                        "com/sun/glass/ui/mac",
-                )
-            }
+                if (!isMac) {
+                    exclude ("com/sun/media/jfxmediaimpl/platform/osx",
+                             "com/sun/prism/es2/MacGL*",
+                             "com/sun/glass/events/mac",
+                             "com/sun/glass/ui/mac",
+                             )
+                }
 
-            if (!isWindows) {
-                exclude("**/*.hlsl",
-                        "com/sun/glass/ui/win",
-                        "com/sun/prism/d3d",
-                        "com/sun/prism/es2/WinGL*",
-                        "com/sun/scenario/effect/impl/hw/d3d"
-                )
-            }
+                if (!isWindows) {
+                    exclude ("**/*.hlsl",
+                             "com/sun/glass/ui/win",
+                             "com/sun/prism/d3d",
+                             "com/sun/prism/es2/WinGL*",
+                             "com/sun/scenario/effect/impl/hw/d3d"
+                             )
+                }
 
-            if (!targetProperties.includeGTK) { //usually IS_LINUX
-                exclude(
-                        "com/sun/glass/ui/gtk",
-                        "com/sun/prism/es2/EGL*",
-                        "com/sun/prism/es2/X11GL*"
-                )
-            }
+                if (!targetProperties.includeGTK) { //usually IS_LINUX
+                    exclude (
+                             "com/sun/glass/ui/gtk",
+                             "com/sun/prism/es2/EGL*",
+                             "com/sun/prism/es2/X11GL*"
+                             )
+                }
 
-            if (!targetProperties.includeEGL) {
-                exclude("com/sun/prism/es2/EGL*")
-            }
+                if (!targetProperties.includeEGL) {
+                    exclude ("com/sun/prism/es2/EGL*")
+                }
 
-            if (!targetProperties.includeMonocle) {
-                exclude("com/sun/glass/ui/monocle")
-                exclude("com/sun/prism/es2/Monocle*")
-            }
+                if (!targetProperties.includeMonocle) {
+                    exclude ("com/sun/glass/ui/monocle")
+                    exclude("com/sun/prism/es2/Monocle*")
+                }
 
-            if (t.name != 'ios') {
-                exclude("com/sun/media/jfxmediaimpl/platform/ios",
-                        "com/sun/glass/ui/ios",
-                        "com/sun/prism/es2/IOS*"
-                )
-            }
+                if (t.name != 'ios') {
+                    exclude ("com/sun/media/jfxmediaimpl/platform/ios",
+                             "com/sun/glass/ui/ios",
+                             "com/sun/prism/es2/IOS*"
+                             )
+                }
 
-            if (t.name != 'android' && t.name != 'dalvik') {
-                exclude("com/sun/glass/ui/android")
-            }
+                if (t.name != 'android' && t.name != 'dalvik') {
+                    exclude ("com/sun/glass/ui/android")
+                }
 
-            // Filter out other platform-specific classes
-            if (targetProperties.containsKey('jfxrtJarExcludes')) {
-                exclude(targetProperties.jfxrtJarExcludes)
-            }
+                // Filter out other platform-specific classes
+                if (targetProperties.containsKey('jfxrtJarExcludes')) {
+                    exclude(targetProperties.jfxrtJarExcludes)
+                }
 
-            /* FIXME: JIGSAW -- handle this in the module itself
-            String webbld = project(":web").buildDir.path
-            String ctrlbld = project(":controls").buildDir.path
-            if (t.name == 'android') {
-                from ("${webbld}/classes/android",
-                      "${webbld}/resources/android",
-                      "${ctrlbld}/classes/android",
-                      "${ctrlbld}/resources/android")
-            } else if (t.name == 'ios') {
-                from ("${webbld}/classes/ios",
-                      "${webbld}/resources/ios")
-            } else {
-                from ("${webbld}/classes/java/main")
-            }
-            */
+                /* FIXME: JIGSAW -- handle this in the module itself
+                String webbld = project(":web").buildDir.path
+                String ctrlbld = project(":controls").buildDir.path
+                if (t.name == 'android') {
+                    from ("${webbld}/classes/android",
+                          "${webbld}/resources/android",
+                          "${ctrlbld}/classes/android",
+                          "${ctrlbld}/resources/android")
+                } else if (t.name == 'ios') {
+                    from ("${webbld}/classes/ios",
+                          "${webbld}/resources/ios")
+                } else {
+                    from ("${webbld}/classes/java/main")
+                }
+                */
         }
         buildModulesTask.dependsOn(buildModuleClassesTask)
     }
@@ -4827,16 +4650,16 @@ compileTargets { t ->
                 def variants = targetProperties[lib].containsKey('variants') && !useLipo ? targetProperties[lib].variants : [null]
                 variants.each { variant ->
                     def variantProperties = variant ? targetProperties[lib][variant] : targetProperties[lib]
-                    from("${graphicsProject.buildDir}/libs/$lib/$t.name/${library(variantProperties.lib)}")
+                    from ("${graphicsProject.buildDir}/libs/$lib/$t.name/${library(variantProperties.lib)}")
                 }
             }
             if (IS_WINDOWS) {
-                from("${graphicsProject.buildDir}/libs/prismD3D/${t.name}/${library(targetProperties.prismD3D.lib)}");
+                from ("${graphicsProject.buildDir}/libs/prismD3D/${t.name}/${library(targetProperties.prismD3D.lib)}");
                 targetProperties.VS2017DLLs.each { vslib ->
-                    from("$vslib");
+                    from ("$vslib");
                 }
                 targetProperties.WinSDKDLLs.each { winsdklib ->
-                    from("$winsdklib");
+                    from ("$winsdklib");
                 }
             }
         }
@@ -4849,34 +4672,31 @@ compileTargets { t ->
 
             def mediaBuildType = project(":media").ext.buildType
             if (IS_COMPILE_MEDIA) {
-                ["fxplugins", "gstreamer-lite", "jfxmedia"].each { name ->
-                    from("${mediaProject.buildDir}/native/${t.name}/${mediaBuildType}/${library(name)}")
-                }
+                [ "fxplugins", "gstreamer-lite", "jfxmedia" ].each { name ->
+                    from ("${mediaProject.buildDir}/native/${t.name}/${mediaBuildType}/${library(name)}") }
 
                 if (t.name == "mac") {
                     // OSX media natives
-                    ["jfxmedia_qtkit", "jfxmedia_avf", "glib-lite"].each { name ->
-                        from("${mediaProject.buildDir}/native/${t.name}/${mediaBuildType}/${library(name)}")
-                    }
+                    [ "jfxmedia_qtkit", "jfxmedia_avf", "glib-lite" ].each { name ->
+                        from ("${mediaProject.buildDir}/native/${t.name}/${mediaBuildType}/${library(name)}") }
                 } else if (t.name == "linux") {
                     from("${mediaProject.buildDir}/native/${t.name}/${mediaBuildType}") { include "libavplugin*.so" }
-                } else from("${mediaProject.buildDir}/native/${t.name}/${mediaBuildType}/${library("glib-lite")}")
+                } else from ("${mediaProject.buildDir}/native/${t.name}/${mediaBuildType}/${library("glib-lite")}")
             } else {
-                if (t.name != "android" && t.name != "dalvik") {
-                    ["fxplugins", "gstreamer-lite", "jfxmedia"].each { name ->
-                        from("$MEDIA_STUB/${library(name)}")
-                    }
+                if (t.name != "android"  && t.name != "dalvik" ) {
+                    [ "fxplugins", "gstreamer-lite", "jfxmedia" ].each { name ->
+                        from ("$MEDIA_STUB/${library(name)}") }
                 }
 
                 if (t.name == "mac") {
                     // copy libjfxmedia_{avf,qtkit}.dylib if they exist
-                    ["jfxmedia_qtkit", "jfxmedia_avf", "glib-lite"].each { name ->
-                        from("$MEDIA_STUB/${library(name)}")
-                    }
+                    [ "jfxmedia_qtkit", "jfxmedia_avf", "glib-lite" ].each { name ->
+                        from ("$MEDIA_STUB/${library(name)}") }
                 } else if (t.name == "linux") {
                     from(MEDIA_STUB) { include "libavplugin*.so" }
-                } else if (t.name != "android" && t.name != "dalvik") {
-                    from("$MEDIA_STUB/${library("glib-lite")}")
+                }
+                else if (t.name != "android"  && t.name != "dalvik" ) {
+                    from ("$MEDIA_STUB/${library("glib-lite")}")
                 }
             }
         }
@@ -4888,10 +4708,10 @@ compileTargets { t ->
             into "${webProject.buildDir}/${moduleNativeDirName}"
 
             if (IS_COMPILE_WEBKIT) {
-                from("${webProject.buildDir}/libs/${t.name}/${library('jfxwebkit')}")
+                from ("${webProject.buildDir}/libs/${t.name}/${library('jfxwebkit')}")
             } else {
                 if (t.name != "android" && t.name != "ios" && t.name != "dalvik") {
-                    from("$WEB_STUB/${library('jfxwebkit')}")
+                    from ("$WEB_STUB/${library('jfxwebkit')}")
                 }
             }
         }
@@ -4918,17 +4738,17 @@ compileTargets { t ->
         }
 
         dependsOn(
-                buildModuleBaseTask,
-                buildModuleGraphicsTask,
-                buildModuleMediaTask,
-                buildModuleWeb,
-                buildModuleSWT,
-        )
+            buildModuleBaseTask,
+            buildModuleGraphicsTask,
+            buildModuleMediaTask,
+            buildModuleWeb,
+            buildModuleSWT,
+            )
     }
     buildModulesTask.dependsOn(buildModuleLibsTask)
 
     def zipTask = project.task("buildModuleZip$t.capital", type: Zip, group: "Build",
-            dependsOn: buildModulesTask) {
+            dependsOn: buildModulesTask ) {
 
         // FIXME: JIGSAW -- this should be moved to a sub-directory so we can keep the same name
         def jfxBundle = "${platformPrefix}javafx-exports.zip"
@@ -4983,24 +4803,24 @@ compileTargets { t ->
                     if (project.hasProperty("moduleName") && project.buildModule) {
                         File dir;
                         if (project.sourceSets.hasProperty('shims')) {
-                            dir = new File(rootProject.buildDir, "shims/${project.ext.moduleName}")
+                           dir = new File(rootProject.buildDir, "shims/${project.ext.moduleName}")
                         } else {
-                            dir = new File(rootProject.buildDir, "modular-sdk/modules/${project.ext.moduleName}")
+                           dir = new File(rootProject.buildDir, "modular-sdk/modules/${project.ext.moduleName}")
                         }
 
                         def dstModuleDir = cygpath(dir.path)
                         modpath << "${project.ext.moduleName}=${dstModuleDir}"
 
                         String themod = dir.toURI()
-                        testJavaPolicyFile << "grant codeBase \"${themod}\" {\n" +
-                                "    permission java.security.AllPermission;\n" +
-                                "};\n"
+                        testJavaPolicyFile <<  "grant codeBase \"${themod}\" {\n" +
+                        "    permission java.security.AllPermission;\n" +
+                        "};\n"
 
                         dir = new File(rootProject.buildDir, "modular-sdk/modules/${project.ext.moduleName}")
                         themod = dir.toURI()
-                        runJavaPolicyFile << "grant codeBase \"${themod}\" {\n" +
-                                "    permission java.security.AllPermission;\n" +
-                                "};\n"
+                        runJavaPolicyFile <<  "grant codeBase \"${themod}\" {\n" +
+                        "    permission java.security.AllPermission;\n" +
+                        "};\n"
                     }
                 }
 
@@ -5011,31 +4831,31 @@ compileTargets { t ->
                     testCompileArgsFile << EXTRA_ADDEXPORTS_STRING
                     testRunArgsFile << EXTRA_ADDEXPORTS_STRING
                 }
-            } else {
+            } else  {
                 def modnames = []
                 moduleProjList.each { project ->
                     if (project.hasProperty("moduleName") && project.buildModule) {
                         modnames << project.ext.moduleName
                         File dir;
                         if (project.sourceSets.hasProperty('shims')) {
-                            dir = new File(rootProject.buildDir, "shims/${project.ext.moduleName}")
+                           dir = new File(rootProject.buildDir, "shims/${project.ext.moduleName}")
                         } else {
-                            dir = new File(rootProject.buildDir, "sdk/lib/${project.ext.moduleName}.jar")
+                           dir = new File(rootProject.buildDir, "sdk/lib/${project.ext.moduleName}.jar")
                         }
 
                         def dstModuleDir = cygpath(dir.path)
                         modpath << "${dstModuleDir}"
 
                         String themod = dir.toURI()
-                        testJavaPolicyFile << "grant codeBase \"${themod}\" {\n" +
-                                "    permission java.security.AllPermission;\n" +
-                                "};\n"
+                        testJavaPolicyFile <<  "grant codeBase \"${themod}\" {\n" +
+                        "    permission java.security.AllPermission;\n" +
+                        "};\n"
 
                         dir = new File(rootProject.buildDir, "sdk/lib/${project.ext.moduleName}.jar")
                         themod = dir.toURI()
-                        runJavaPolicyFile << "grant codeBase \"${themod}\" {\n" +
-                                "    permission java.security.AllPermission;\n" +
-                                "};\n"
+                        runJavaPolicyFile <<  "grant codeBase \"${themod}\" {\n" +
+                        "    permission java.security.AllPermission;\n" +
+                        "};\n"
                     }
                 }
 
@@ -5120,9 +4940,9 @@ task checkrepo() {
         logger.info("checking for whitespace (open)");
         exec {
             if (IS_WINDOWS) {
-                commandLine 'bash', 'tools/scripts/checkWhiteSpace'
+                commandLine  'bash', 'tools/scripts/checkWhiteSpace'
             } else {
-                commandLine 'bash', 'tools/scripts/checkWhiteSpace', '-x'
+                commandLine  'bash', 'tools/scripts/checkWhiteSpace', '-x'
             }
         }
     }
@@ -5133,9 +4953,9 @@ task checkrepoall() {
         logger.info("checking for all whitespace (open)");
         exec {
             if (IS_WINDOWS) {
-                commandLine 'bash', 'tools/scripts/checkWhiteSpace', '-a'
+                commandLine  'bash', 'tools/scripts/checkWhiteSpace', '-a'
             } else {
-                commandLine 'bash', 'tools/scripts/checkWhiteSpace', '-x', '-a'
+                commandLine  'bash', 'tools/scripts/checkWhiteSpace', '-x', '-a'
             }
         }
     }
@@ -5163,12 +4983,12 @@ compileTargets { t ->
     // Every platform must define these variables
     def props = project.ext[t.upper];
     showFlags.dependsOn(
-            project.task("showFlags$t.upper") {
-                doLast() {
-                    println "Properties set for $t.upper"
-                    props.each { println it }
-                }
+        project.task("showFlags$t.upper") {
+            doLast() {
+                println "Properties set for $t.upper"
+                props.each { println it }
             }
+        }
     )
 
 }

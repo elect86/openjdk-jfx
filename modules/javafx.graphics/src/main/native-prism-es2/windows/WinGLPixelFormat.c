@@ -93,6 +93,10 @@ JNIEXPORT jlong JNICALL Java_com_sun_prism_es2_WinGLPixelFormat_nCreatePixelForm
 
     /* initialize the structure */
     initializePixelFormatInfo(pfInfo);
+    fprintf(stderr, "nCreatePixelFormat: %p\n", (void *)&pfInfo->pixelFormat);
+    fprintf(stderr, "nCreatePixelFormat: %p\n", (void *)&pfInfo->dummyHwnd);
+    fprintf(stderr, "nCreatePixelFormat: %p\n", (void *)&pfInfo->dummyHdc);
+    fprintf(stderr, "nCreatePixelFormat: %p\n", (void *)&pfInfo->dummySzAppName);
     pfInfo->pixelFormat = pixelFormat;
     pfInfo->dummyHwnd = hwnd;
     pfInfo->dummyHdc = hdc;
