@@ -134,14 +134,6 @@ final class QuantumRenderer extends ThreadPoolExecutor  {
 
         @Override public Thread newThread(Runnable r) {
 
-            System.out.println(r);
-            System.out.println(r == null);
-
-            for (StackTraceElement ste : Thread.currentThread().getStackTrace()) {
-                System.out.println(ste);
-            }
-
-
             final PipelineRunnable pipeline = new PipelineRunnable(r);
             _renderer =
                 AccessController.doPrivileged((PrivilegedAction<Thread>) () -> {
@@ -269,7 +261,7 @@ final class QuantumRenderer extends ThreadPoolExecutor  {
                 QuantumRenderer newTk = null;
                 try {
                     newTk = new QuantumRenderer();
-                    System.out.println("prestart " + newTk.prestartCoreThread());
+                    newTk.prestartCoreThread();
 
                     newTk.initLatch.await();
                 } catch (Throwable t) {
