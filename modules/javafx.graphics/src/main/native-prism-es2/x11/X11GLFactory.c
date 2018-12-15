@@ -354,6 +354,13 @@ JNIEXPORT jlong JNICALL Java_com_sun_prism_es2_X11GLFactory_nInitialize
     ctxInfo->screen = screen;
     ctxInfo->visualID = (int) visualInfo->visualid;
 
+    fprintf(stderr, "ctxInfo %p\n", ctxInfo);
+    fprintf(stderr, "ctxInfo->display %p\n", (void *)&ctxInfo->display);
+    fprintf(stderr, "ctxInfo->context %p\n", (void *)&ctxInfo->context);
+    fprintf(stderr, "ctxInfo->screen %p\n", (void *)&ctxInfo->screen);
+    fprintf(stderr, "ctxInfo->visualID %p\n", (void *)&ctxInfo->visualID);
+    fprintf(stderr, "ctxInfo->versionStr %p\n", (void *)&ctxInfo->versionStr);
+
     /* Releasing native resources */
     printAndReleaseResources(display, fbConfigList, visualInfo, win, ctx, cmap, NULL);
 

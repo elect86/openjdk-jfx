@@ -35,12 +35,14 @@ class X11GLDrawable extends GLDrawable {
     X11GLDrawable(GLPixelFormat pixelFormat) {
 
         super(0L, pixelFormat);
+        System.out.println("X11GLDrawable.nGetDummyDrawable");
         long nDInfo = nGetDummyDrawable(pixelFormat.getNativePFInfo());
         setNativeDrawableInfo(nDInfo);
     }
 
     X11GLDrawable(long nativeWindow, GLPixelFormat pixelFormat) {
         super(nativeWindow, pixelFormat);
+        System.out.println("X11GLDrawable.nCreateDrawable");
         long nDInfo = nCreateDrawable(nativeWindow, pixelFormat.getNativePFInfo());
         setNativeDrawableInfo(nDInfo);
     }
