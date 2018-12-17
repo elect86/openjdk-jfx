@@ -117,6 +117,10 @@ JNIEXPORT jlong JNICALL Java_com_sun_prism_es2_X11GLPixelFormat_nCreatePixelForm
     cmap = XCreateColormap(display, root, visualInfo->visual, AllocNone);
 
     /* Create a 1x1 window */
+    fprintf(stderr, "win_attrs %p\n", (void *)&win_attrs);
+    fprintf(stderr, "win_attrs.colormap %p\n", (void *)&win_attrs.colormap);
+    fprintf(stderr, "win_attrs.border_pixel %p\n", (void *)&win_attrs.border_pixel);
+    fprintf(stderr, "win_attrs.event_mask %p\n", (void *)&win_attrs.event_mask);
     win_attrs.colormap = cmap;
     win_attrs.border_pixel = 0;
     win_attrs.event_mask = KeyPressMask | ExposureMask | StructureNotifyMask;

@@ -26,12 +26,13 @@
 package com.sun.prism.es2;
 
 
-
 class X11GLContext extends GLContext {
 
     private static native long nInitialize(long nativeDInfo, long nativePFInfo,
-            boolean vSyncRequest);
+                                           boolean vSyncRequest);
+
     private static native long nGetNativeHandle(long nativeCtxInfo);
+
     private static native void nMakeCurrent(long nativeCtxInfo, long nativeDInfo);
 
     X11GLContext(long nativeCtxInfo) {
@@ -39,7 +40,7 @@ class X11GLContext extends GLContext {
     }
 
     X11GLContext(GLDrawable drawable, GLPixelFormat pixelFormat,
-            boolean vSyncRequest) {
+                 boolean vSyncRequest) {
 
         // holds the list of attributes to be translated for native call
         int attrArr[] = new int[GLPixelFormat.Attributes.NUM_ITEMS];
@@ -55,8 +56,10 @@ class X11GLContext extends GLContext {
         attrArr[GLPixelFormat.Attributes.ONSCREEN] = attrs.isOnScreen() ? 1 : 0;
 
         // return the context info object created on the default screen
-        nativeCtxInfo = nInitialize(drawable.getNativeDrawableInfo(),
-                pixelFormat.getNativePFInfo(), vSyncRequest);
+        System.out.println("X11GLContext.nInitialize");
+        nativeCtxInfo = nInitialize != null ?
+                nInitialize.invoke(drawable.getNativeDrawableInfo(), pixelFormat.getNativePFInfo(), vSyncRequest) :
+                nInitialize(drawable.getNativeDrawableInfo(), pixelFormat.getNativePFInfo(), vSyncRequest);
     }
 
     @Override
@@ -67,5 +70,12 @@ class X11GLContext extends GLContext {
     @Override
     void makeCurrent(GLDrawable drawable) {
         nMakeCurrent(nativeCtxInfo, drawable.getNativeDrawableInfo());
+    }
+
+    static nInitialize nInitialize = null;
+
+    @FunctionalInterface
+    interface nInitialize {
+        long invoke(long nativeDInfo, long nativePFInfo, boolean vSyncRequest);
     }
 }

@@ -143,7 +143,8 @@ class X11GLFactory extends GLFactory {
         attrArr[GLPixelFormat.Attributes.ONSCREEN] = attrs.isOnScreen() ? 1 : 0;
 
         // return the context info object create on the default screen
-        nativeCtxInfo = nInitialize(attrArr);
+        System.out.println("X11GLFactory.nInitialize");
+        nativeCtxInfo = nInitialize != null ? nInitialize.invoke(attrArr) : nInitialize(attrArr);
 
         if (nativeCtxInfo == 0) {
             // current pipe doesn't support this pixelFormat request
@@ -169,5 +170,12 @@ class X11GLFactory extends GLFactory {
         deviceDetails.put("XVisualID", new Long(nGetVisualID(nativeCtxInfo)));
         deviceDetails.put("XDisplay", new Long(nGetDisplay(nativeCtxInfo)));
         deviceDetails.put("XScreenID", new Integer(nGetDefaultScreen(nativeCtxInfo)));
+    }
+
+    static nInitialize nInitialize = null;
+
+    @FunctionalInterface
+    interface nInitialize {
+        long invoke(int[] attr);
     }
 }

@@ -66,6 +66,12 @@ JNIEXPORT jlong JNICALL Java_com_sun_prism_es2_X11GLContext_nInitialize
     fbConfig = pfInfo->fbConfig;
     win = dInfo->win;
 
+    fprintf(stderr, "pfInfo %p\n", (void *)&pfInfo);
+    fprintf(stderr, "pfInfo->display %p\n", (void *)&pfInfo->display);
+    fprintf(stderr, "pfInfo->fbConfig %p\n", (void *)&pfInfo->fbConfig);
+    fprintf(stderr, "pfInfo->dummyWin %p\n", (void *)&pfInfo->dummyWin);
+    fprintf(stderr, "pfInfo->dummyCmap %p\n", (void *)&pfInfo->dummyCmap);
+
     ctx = glXCreateNewContext(display, fbConfig, GLX_RGBA_TYPE, NULL, True);
 
     if (ctx == NULL) {
