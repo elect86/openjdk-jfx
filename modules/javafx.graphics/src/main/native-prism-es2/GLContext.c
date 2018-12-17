@@ -1250,7 +1250,7 @@ JNIEXPORT void JNICALL Java_com_sun_prism_es2_GLContext_nUpdateViewport
     if (ctxInfo == NULL) {
         return;
     }
-
+//    fprintf(stderr, "glViewport %d, %d, %d, %d\n", x, y, w, h);
     glViewport((GLint) x, (GLint) y, (GLsizei) w, (GLsizei) h);
 }
 
