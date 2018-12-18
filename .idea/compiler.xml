@@ -27,8 +27,8 @@
       <module name="javafx.web.org.openjfx.web.main" target="11" />
       <module name="javafx.web.org.openjfx.web.shims" target="11" />
       <module name="javafx.web.org.openjfx.web.test" target="11" />
-      <module name="openjdk-jfx.buildSrc.main" target="1.8" />
-      <module name="openjdk-jfx.buildSrc.test" target="1.8" />
+      <module name="openjdk-jfx.buildSrc.main" target="11" />
+      <module name="openjdk-jfx.buildSrc.test" target="11" />
       <module name="openjdk-jfx.swt.main" target="11" />
       <module name="openjdk-jfx.swt.test" target="11" />
       <module name="openjdk-jfx.systemTests.main" target="11" />

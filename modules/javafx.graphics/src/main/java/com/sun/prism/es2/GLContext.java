@@ -611,12 +611,21 @@ abstract class GLContext {
             viewportY = y;
             viewportWidth = w;
             viewportHeight = h;
+            if(nUpdateViewport != null)
+                nUpdateViewport.invoke(x, y, w, h);
             nUpdateViewport(nativeCtxInfo, x, y, w, h);
         }
         if (this.depthTest != depthTest) {
             nSetDepthTest(nativeCtxInfo, depthTest);
             this.depthTest = depthTest;
         }
+    }
+
+    static nUpdateViewport nUpdateViewport = null;
+
+    @FunctionalInterface
+    interface nUpdateViewport {
+        void invoke(int x, int y, int w, int h);
     }
 
     void updateMSAAState(boolean msaa) {
