@@ -185,7 +185,8 @@ abstract class ViewPainter implements Runnable {
                 freshBackBuffer ||
                 sceneState.getScene().isEntireSceneDirty() ||
                 sceneState.getScene().getDepthBuffer() ||
-                !PrismSettings.dirtyOptsEnabled;
+                !PrismSettings.dirtyOptsEnabled ||
+                clear != null;
         // We are going to draw dirty opt boxes either if we're supposed to show the dirty
         // regions, or if we're supposed to show the overdraw boxes.
         final boolean showDirtyOpts = PrismSettings.showDirtyRegions || PrismSettings.showOverdraw;
@@ -444,11 +445,13 @@ abstract class ViewPainter implements Runnable {
     }
 
     private void doPaint(Graphics g, NodePath renderRootPath) {
-        if(begin != null)
-            begin.run();
+        if(init != null) {
+            init.run();
+            init = null;
+        }
         // Null path indicates that occlusion culling is not used
-        if (renderRootPath != null) {
-            if (renderRootPath.isEmpty()) {
+        if (renderRootPath != null && clear == null) {
+            if (renderRootPath.isEmpty() && clear == null) {
                 // empty render path indicates that no rendering is needed.
                 // There may be occluded dirty Nodes however, so we need to clear them
                 root.clearDirtyTree();
@@ -465,8 +468,8 @@ abstract class ViewPainter implements Runnable {
         g.setLights(scene.getLights());
         g.setDepthBuffer(scene.getDepthBuffer());
         Color clearColor = sceneState.getClearColor();
-        if (clear_doPaint != null)
-            clear_doPaint.run();
+        if (clear != null)
+            clear.run();
         else if (clearColor != null) {
             g.clear(clearColor);
         }
@@ -481,12 +484,8 @@ abstract class ViewPainter implements Runnable {
         g.setCamera(sceneState.getCamera());
         g.setRenderRoot(renderRootPath);
         root.render(g);
-
-        if(end_doPaint != null)
-            end_doPaint.run();
     }
 
-    static Runnable begin = null;
-    static Runnable clear_doPaint = null;
-    static Runnable end_doPaint = null;
+    static Runnable init = null;
+    static Runnable clear = null;
 }
