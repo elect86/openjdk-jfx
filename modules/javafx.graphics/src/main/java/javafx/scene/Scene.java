@@ -2490,7 +2490,7 @@ public class Scene implements EventTarget {
             }
 
             boolean dirty = dirtyNodes == null || dirtyNodesSize != 0 || !isDirtyEmpty();
-            if (dirty) {
+            if (true) {
                 if (PULSE_LOGGING_ENABLED) {
                     PulseLogger.newPhase("Update bounds");
                 }
