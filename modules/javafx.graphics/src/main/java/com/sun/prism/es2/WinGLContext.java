@@ -69,7 +69,7 @@ class WinGLContext extends GLContext {
 
     @Override
     void makeCurrent(GLDrawable drawable) {
-        System.out.println("WinGLContext.nMakeCurrent");
+//        System.out.println("WinGLContext.nMakeCurrent");
         nMakeCurrent(nativeCtxInfo, drawable.getNativeDrawableInfo());
     }
 

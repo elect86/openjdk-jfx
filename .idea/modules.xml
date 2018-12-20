@@ -4,34 +4,20 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/openjdk-jfx.iml" filepath="$PROJECT_DIR$/.idea/modules/openjdk-jfx.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/apps/openjdk-jfx.apps.iml" filepath="$PROJECT_DIR$/.idea/modules/apps/openjdk-jfx.apps.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/apps/openjdk-jfx.apps.iml" filepath="$PROJECT_DIR$/.idea/modules/apps/openjdk-jfx.apps.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/openjdk-jfx.buildSrc.iml" filepath="$PROJECT_DIR$/.idea/modules/openjdk-jfx.buildSrc.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/openjdk-jfx.buildSrc.iml" filepath="$PROJECT_DIR$/.idea/modules/openjdk-jfx.buildSrc.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/openjdk-jfx.buildSrc.main.iml" filepath="$PROJECT_DIR$/.idea/modules/openjdk-jfx.buildSrc.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/openjdk-jfx.buildSrc.test.iml" filepath="$PROJECT_DIR$/.idea/modules/openjdk-jfx.buildSrc.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.swt/openjdk-jfx.swt.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.swt/openjdk-jfx.swt.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.swt/openjdk-jfx.swt.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.swt/openjdk-jfx.swt.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.swt/openjdk-jfx.swt.main.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.swt/openjdk-jfx.swt.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.swt/openjdk-jfx.swt.main.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.swt/openjdk-jfx.swt.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.swt/openjdk-jfx.swt.test.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.swt/openjdk-jfx.swt.test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/javafx.swt/openjdk-jfx.swt.test.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/javafx.swt/openjdk-jfx.swt.test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.iml" filepath="$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.iml" filepath="$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.main.iml" filepath="$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.main.iml" filepath="$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.test.iml" filepath="$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.test.iml" filepath="$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp1.iml" filepath="$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp1.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp1.iml" filepath="$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp1.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp2.iml" filepath="$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp2.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp2.iml" filepath="$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp2.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp3.iml" filepath="$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp3.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp3.iml" filepath="$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp3.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp4.iml" filepath="$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp4.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp4.iml" filepath="$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp4.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp5.iml" filepath="$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp5.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp5.iml" filepath="$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp5.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp6.iml" filepath="$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp6.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp6.iml" filepath="$PROJECT_DIR$/.idea/modules/tests/system/openjdk-jfx.systemTests.testapp6.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/openjfx.iml" filepath="$PROJECT_DIR$/.idea/modules/openjfx.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/apps/openjfx.apps.iml" filepath="$PROJECT_DIR$/.idea/modules/apps/openjfx.apps.iml" />

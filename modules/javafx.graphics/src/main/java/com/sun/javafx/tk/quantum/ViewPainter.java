@@ -185,8 +185,7 @@ abstract class ViewPainter implements Runnable {
                 freshBackBuffer ||
                 sceneState.getScene().isEntireSceneDirty() ||
                 sceneState.getScene().getDepthBuffer() ||
-                !PrismSettings.dirtyOptsEnabled ||
-                clear != null;
+                !PrismSettings.dirtyOptsEnabled;
         // We are going to draw dirty opt boxes either if we're supposed to show the dirty
         // regions, or if we're supposed to show the overdraw boxes.
         final boolean showDirtyOpts = PrismSettings.showDirtyRegions || PrismSettings.showOverdraw;
@@ -450,8 +449,8 @@ abstract class ViewPainter implements Runnable {
             init = null;
         }
         // Null path indicates that occlusion culling is not used
-        if (renderRootPath != null && clear == null) {
-            if (renderRootPath.isEmpty() && clear == null) {
+        if (renderRootPath != null) {
+            if (renderRootPath.isEmpty()) {
                 // empty render path indicates that no rendering is needed.
                 // There may be occluded dirty Nodes however, so we need to clear them
                 root.clearDirtyTree();

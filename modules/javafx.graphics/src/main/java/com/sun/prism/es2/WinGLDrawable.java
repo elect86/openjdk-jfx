@@ -50,7 +50,7 @@ class WinGLDrawable extends GLDrawable {
 
     @Override
     boolean swapBuffers(GLContext glCtx) {
-        System.out.println("WinGLDrawable.nSwapBuffers");
+//        System.out.println("WinGLDrawable.nSwapBuffers");
         return nSwapBuffers(getNativeDrawableInfo());
     }
 }
