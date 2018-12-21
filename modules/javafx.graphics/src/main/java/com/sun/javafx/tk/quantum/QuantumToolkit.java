@@ -456,7 +456,7 @@ public final class QuantumToolkit extends Toolkit {
     void postPulse() {
         if (toolkitRunning.get() &&
             (animationRunning.get() || nextPulseRequested.get() || collector.hasDirty()) &&
-            !setPulseRunning()) {
+            !setPulseRunning() || ViewPainter.clear != null) {
 
             Application.invokeLater(pulseRunnable);
 

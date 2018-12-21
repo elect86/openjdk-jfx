@@ -350,7 +350,14 @@ abstract class GLContext {
         if (nativeFBOID != FBO_ID_NOCACHE) {
             nativeFBOID = FBO_ID_UNSET; // invalidate FBO ID cache
         }
-        return nCreateFBO(nativeCtxInfo, texID);
+        return nCreateFBO != null ? nCreateFBO.invoke(nativeCtxInfo, texID) : nCreateFBO(nativeCtxInfo, texID);
+    }
+
+    static nCreateFBO nCreateFBO = null;
+
+    @FunctionalInterface
+    interface nCreateFBO {
+        int invoke(long nativeCtxInfo, int texID);
     }
 
     /**
